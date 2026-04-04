@@ -30,7 +30,7 @@
         }
         .login-box h2 { font-family: 'Orbitron'; color: var(--gold); margin-bottom: 25px; font-size: 22px; }
 
-        #dashboard { display: none; } /* Hidden until login */
+        #dashboard { display: none; }
 
         header {
             background: rgba(20,20,20,0.95); padding: 15px; border-bottom: 1px solid #333;
@@ -39,6 +39,11 @@
         }
         .brand { font-family: 'Orbitron'; font-size: 20px; font-weight: 900; }
         .brand span { color: var(--gold); }
+
+        .stats-bar { display: flex; gap: 10px; padding: 15px; background: #050505; }
+        .stat-card { background: var(--panel); flex: 1; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #333; }
+        .stat-card p { font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 5px; font-family: 'Orbitron'; }
+        .stat-card div { font-size: 24px; font-weight: bold; font-family: 'Orbitron'; }
 
         .nav-scroller { overflow-x: auto; white-space: nowrap; padding: 10px; background: #111; border-bottom: 1px solid #222; }
         .nav-btn { display: inline-block; padding: 8px 20px; margin-right: 10px; border-radius: 20px; background: #222; color: #888; font-size: 12px; font-family: 'Orbitron'; cursor: pointer; border: 1px solid #333; transition: 0.3s; }
@@ -50,32 +55,27 @@
         .input-group { background: var(--panel); padding: 20px; border-radius: 10px; border: 1px solid #333; margin-bottom: 20px; }
         .input-group h3 { color: var(--gold); font-family: 'Orbitron'; margin-bottom: 15px; font-size: 16px; }
 
-        /* Login & Input Design Fixes */
         input[type="text"], input[type="email"], input[type="password"], input[type="number"], select { 
             width: 100%; padding: 14px 12px; margin-bottom: 15px; background: #050505; 
             border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 14px; transition: 0.3s;
         }
         input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
 
-        /* Modern Grid Layout for Checkboxes */
+        input, textarea, select, .data-title, .code-text, .user-email { user-select: text !important; -webkit-user-select: text !important; }
+
         .cat-checkboxes { 
             display: grid; grid-template-columns: 1fr 1fr; gap: 15px; 
             background: #050505; padding: 15px; border: 1px solid #333; 
             border-radius: 8px; margin-bottom: 15px; 
         }
-        .cat-checkboxes label { 
-            color: #ddd; font-size: 14px; display: flex; align-items: center; 
-            gap: 10px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-weight: 500;
-        }
-        .cat-checkboxes input[type="checkbox"] { 
-            width: 18px; height: 18px; margin: 0; accent-color: var(--gold); cursor: pointer;
-        }
+        .cat-checkboxes label { color: #ddd; font-size: 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-family: 'Orbitron'; font-weight: 500; }
+        .cat-checkboxes input[type="checkbox"] { width: 18px; height: 18px; margin: 0; accent-color: var(--gold); cursor: pointer; }
 
         .btn-action { width: 100%; padding: 14px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; background: linear-gradient(45deg, #b8952b, var(--gold)); color: #000; font-family: 'Orbitron'; font-size: 14px; transition: 0.2s;}
         .btn-action:active { transform: scale(0.98); }
         .btn-action.updating { background: linear-gradient(45deg, #0056b3, #007bff); color: #fff; }
 
-        .data-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 20px; }
+        .data-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 15px; }
         .data-card { background: #111; border: 1px solid #333; border-radius: 8px; overflow: hidden; position: relative; }
         .data-card img { width: 100%; height: 100px; object-fit: cover; }
         .data-info { padding: 10px; }
@@ -97,6 +97,62 @@
         .st-active { background: rgba(0, 230, 118, 0.2); color: var(--green); }
         .st-used { background: rgba(255, 59, 59, 0.2); color: var(--red); }
         .code-controls { display:flex; gap:10px; margin-bottom:10px; }
+
+        /* =========================================
+           NEW PREMIUM FOLDER DESIGN 
+           ========================================= */
+        .folder-header { 
+            background: linear-gradient(145deg, #181818, #0f0f0f); 
+            padding: 16px 20px; 
+            margin-top: 15px; 
+            border-radius: 12px; 
+            border-left: 5px solid var(--gold); 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            border-top: 1px solid #222;
+            border-right: 1px solid #222;
+            border-bottom: 1px solid #222;
+            transition: all 0.3s ease;
+        }
+        .folder-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.15);
+            border-left-color: var(--cyan);
+        }
+        .folder-header-title {
+            font-family: 'Orbitron'; 
+            font-weight: bold; 
+            font-size: 14px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            padding-right: 15px;
+            line-height: 1.4;
+        }
+        .folder-header-meta {
+            font-family: 'Outfit';
+            font-size: 11px; 
+            font-weight: 600;
+            color: var(--gold); 
+            background: rgba(212, 175, 55, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .folder-content { display: none; padding: 15px 5px; border-top: none; }
+        
+        /* User Log CSS */
+        .user-card { background: #111; padding: 15px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #333; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #333; transition: 0.3s;}
+        .user-email { color: var(--cyan); font-weight: bold; font-family: 'Orbitron'; font-size: 14px;}
+        .user-time { font-size: 11px; color: #999; margin-top: 2px; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: inline-block;}
 
     </style>
 </head>
@@ -122,6 +178,18 @@
             </div>
         </header>
 
+        <!-- REAL-TIME STATS BAR -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <p>Online Users</p>
+                <div id="online-count" style="color: var(--cyan);">0</div>
+            </div>
+            <div class="stat-card">
+                <p>Total Users</p>
+                <div id="total-count" style="color: var(--gold);">0</div>
+            </div>
+        </div>
+
         <div class="nav-scroller">
             <div class="nav-btn active" onclick="showTab('anime')">ANIME SERIES</div>
             <div class="nav-btn" onclick="showTab('movies')">MOVIE BOX</div>
@@ -129,6 +197,7 @@
             <div class="nav-btn" onclick="showTab('shorts')">SHORTS</div>
             <div class="nav-btn" onclick="showTab('banners')">ALL BANNERS</div>
             <div class="nav-btn" onclick="showTab('codes')">PREMIUM CODES</div>
+            <div class="nav-btn" onclick="showTab('users-log')">USERS LOG</div>
         </div>
 
         <!-- ANIME SECTION -->
@@ -136,16 +205,16 @@
             <div class="input-group">
                 <h3 id="an-head"><i class="fas fa-upload"></i> UPLOAD ANIME EPISODES</h3>
                 
-                <!-- Category Checkboxes -->
                 <div class="cat-checkboxes">
                     <label><input type="checkbox" value="anime" class="cat-chk" checked> Anime</label>
+                    <label><input type="checkbox" value="movie" class="cat-chk"> Movie</label>
                     <label><input type="checkbox" value="trending" class="cat-chk"> Trending</label>
                 </div>
 
-                <input type="text" id="an-folder" placeholder="Folder Name (e.g. Naruto)">
+                <input type="text" id="an-folder" placeholder="Folder/Season Name (e.g. Solo Leveling S1)">
                 <input type="text" id="an-title" placeholder="Episode Title">
                 <input type="text" id="an-thumb" placeholder="Thumbnail Image URL">
-                <input type="text" id="an-url" placeholder="Video URL (Original)">
+                <input type="text" id="an-url" placeholder="Video URL (Original) - Optional"> 
                 <input type="text" id="an-url-hin" placeholder="Video URL (Hindi) - Optional">
                 <input type="text" id="an-url-eng" placeholder="Video URL (English) - Optional">
                 <select id="an-type">
@@ -156,18 +225,24 @@
                 <button id="an-btn" class="btn-action" onclick="uploadAnime()">UPLOAD ANIME & NOTIFY</button>
                 <button id="an-cancel" style="display:none; width:100%; margin-top:5px; background:#333; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; font-family:'Orbitron'; cursor:pointer;" onclick="cancelEdit('anime')">CANCEL EDIT</button>
             </div>
-            <div id="anime-list" class="data-list"></div>
+            <div id="anime-list"></div> 
         </div>
 
-        <!-- MOVIE SECTION (UPDATED) -->
+        <!-- MOVIE SECTION -->
         <div id="movies" class="section-view">
             <div class="input-group" style="border-color:#ff3b3b;">
                 <h3 id="mv-head" style="color:#ff3b3b;"><i class="fas fa-film"></i> UPLOAD MOVIE</h3>
+                
+                <div class="cat-checkboxes">
+                    <label><input type="checkbox" value="movie" class="mv-cat-chk" checked> General Movie</label>
+                    <label><input type="checkbox" value="anime" class="mv-cat-chk"> Anime Movie</label>
+                    <label><input type="checkbox" value="cartoon" class="mv-cat-chk"> Cartoon Movie</label>
+                    <label><input type="checkbox" value="trending" class="mv-cat-chk"> Trending</label>
+                </div>
+
                 <input type="text" id="mv-title" placeholder="Movie Title">
                 <input type="text" id="mv-thumb" placeholder="Poster Image URL">
                 <input type="text" id="mv-url" placeholder="Movie Link URL">
-                
-                <!-- Added Premium Selector for Movie -->
                 <select id="mv-type" style="border-color:#ff3b3b;">
                     <option value="free">Free Movie</option>
                     <option value="premium">Premium Movie (VIP)</option>
@@ -180,15 +255,20 @@
             <div id="movie-list" class="data-list"></div>
         </div>
 
-        <!-- CARTOON SECTION (UPDATED) -->
+        <!-- CARTOON SECTION -->
         <div id="cartoons" class="section-view">
             <div class="input-group" style="border-color:var(--cyan);">
                 <h3 id="ct-head" style="color:var(--cyan);"><i class="fas fa-paw"></i> UPLOAD CARTOON</h3>
+
+                <div class="cat-checkboxes">
+                    <label><input type="checkbox" value="cartoon" class="ct-cat-chk" checked> Cartoon Series</label>
+                    <label><input type="checkbox" value="movie" class="ct-cat-chk"> Cartoon Movie</label>
+                    <label><input type="checkbox" value="trending" class="ct-cat-chk"> Trending</label>
+                </div>
+
                 <input type="text" id="ct-title" placeholder="Cartoon Title">
                 <input type="text" id="ct-thumb" placeholder="Poster Image URL">
                 <input type="text" id="ct-url" placeholder="Video Link URL">
-                
-                <!-- Added Premium Selector for Cartoon -->
                 <select id="ct-type" style="border-color:var(--cyan);">
                     <option value="free">Free Cartoon</option>
                     <option value="premium">Premium Cartoon (VIP)</option>
@@ -201,6 +281,7 @@
             <div id="cartoon-list" class="data-list"></div>
         </div>
 
+        <!-- SHORTS SECTION -->
         <div id="shorts" class="section-view">
             <div class="input-group">
                 <h3><i class="fas fa-video"></i> ADD SHORT VIDEO</h3>
@@ -210,6 +291,7 @@
             <div id="shorts-list" class="data-list"></div>
         </div>
 
+        <!-- BANNERS SECTION -->
         <div id="banners" class="section-view">
             <div class="input-group">
                 <h3 id="bn-head"><i class="fas fa-images"></i> HOME SLIDER BANNER</h3>
@@ -231,6 +313,7 @@
             <div id="movie-banner-list" class="data-list"></div>
         </div>
 
+        <!-- CODES SECTION -->
         <div id="codes" class="section-view">
             <div class="input-group">
                 <h3><i class="fas fa-key"></i> GENERATE VIP CODES</h3>
@@ -247,6 +330,15 @@
                 <button onclick="if(confirm('Delete USED codes?')) deleteUsedCodes()" style="background:#333; color:#888; border:none; padding:5px 10px; border-radius:5px; font-size:10px;">CLEAR USED</button>
             </div>
             <div id="code-list" style="margin-top:10px;"></div>
+        </div>
+
+        <!-- USERS LOG SECTION -->
+        <div id="users-log" class="section-view">
+            <div class="input-group" style="border-color: var(--cyan);">
+                <h3 style="color: var(--cyan);"><i class="fas fa-users"></i> REGISTERED USERS LOG</h3>
+                <p style="font-size: 11px; color: #888; margin-bottom: 5px;">Track user login times, email, and live status.</p>
+            </div>
+            <div id="users-container" style="margin-top: 10px;"></div>
         </div>
 
     </div>
@@ -277,6 +369,9 @@
         const ONE_SIGNAL_API_KEY = "Os_v2_app_7wwdskfc7rf4pfkbzoc24atebhgngpwcqoceoefjjehehazrf4oylyaia4qlnlly53d7brxmypdsnyqr6mjub7ugwuavak5gcduydda";
         const ONE_SIGNAL_APP_ID = "fdac3928-a2fc-4bc7-9541-cb85ae026409";
         const ADMIN_EMAIL = "admin@animax.com"; 
+
+        let onlineUsersMap = {};
+        let usersDataList = [];
 
         auth.onAuthStateChanged(user => {
             if (user && user.email === ADMIN_EMAIL) {
@@ -316,6 +411,18 @@
             event.target.classList.add('active');
         }
 
+        function toggleFolder(id) {
+            const el = document.getElementById('folder-' + id);
+            const icon = document.getElementById('icon-' + id);
+            if(el.style.display === 'none' || el.style.display === '') {
+                el.style.display = 'block';
+                if(icon) icon.className = "fas fa-chevron-up";
+            } else {
+                el.style.display = 'none';
+                if(icon) icon.className = "fas fa-chevron-down";
+            }
+        }
+
         // --- ANIME FUNCTIONS ---
         function uploadAnime() {
             let selectedCats = [];
@@ -331,27 +438,26 @@
             const type = document.getElementById('an-type').value;
             const key = document.getElementById('an-key').value;
 
-            if(!folder || !title || !url) return alert("Fill all required fields!");
+            if(!folder || !title || (!url && !url_hin && !url_eng)) {
+                return alert("Fill folder name, title, and at least ONE Video URL!");
+            }
 
             if (key) {
-                db.ref('anime/' + key).update({ category, folder, title, thumbnail: thumb, url, url_hin, url_eng, type }).then(() => {
-                    alert("Anime Updated Successfully!");
-                    cancelEdit('anime');
-                });
+                db.ref('anime/' + key).update({ category, folder, title, thumbnail: thumb, url, url_hin, url_eng, type });
+                cancelEdit('anime');
+                setTimeout(() => alert("Anime Updated Successfully!"), 10);
             } else {
                 db.ref('anime').push({ category, folder, title, thumbnail: thumb, url, url_hin, url_eng, type, timestamp: Date.now() });
                 sendNotification("🎬 New Episode Out!", `${folder}: ${title} এখন অনলাইনে।`);
-                alert("Uploaded & Notified!");
                 clearInputs(['an-title', 'an-url', 'an-url-hin', 'an-url-eng']);
+                setTimeout(() => alert("Uploaded & Notified!"), 10);
             }
         }
 
         function editAnime(key, folder, title, thumb, url, type, url_hin, url_eng, categoryStr) {
             document.getElementById('an-key').value = key; 
             const catArray = (categoryStr || 'anime').split(',');
-            document.querySelectorAll('.cat-chk').forEach(cb => {
-                cb.checked = catArray.includes(cb.value);
-            });
+            document.querySelectorAll('.cat-chk').forEach(cb => { cb.checked = catArray.includes(cb.value); });
             document.getElementById('an-folder').value = folder;
             document.getElementById('an-title').value = title; 
             document.getElementById('an-thumb').value = thumb;
@@ -364,53 +470,75 @@
             window.scrollTo(0,0);
         }
 
-        // --- MOVIE FUNCTIONS (UPDATED) ---
+        // --- MOVIE FUNCTIONS ---
         function uploadMovie() {
+            let selectedCats = [];
+            document.querySelectorAll('.mv-cat-chk:checked').forEach(cb => selectedCats.push(cb.value));
+            const category = selectedCats.length > 0 ? selectedCats.join(',') : 'movie';
+
             const title = document.getElementById('mv-title').value; const thumb = document.getElementById('mv-thumb').value;
             const url = document.getElementById('mv-url').value; const key = document.getElementById('mv-key').value;
-            const type = document.getElementById('mv-type').value; // Get Premium/Free
+            const type = document.getElementById('mv-type').value;
             
             if(!title || !url) return alert("Fill all fields!");
 
             if(key) {
-                db.ref('movies/' + key).update({ title, thumbnail: thumb, url, type }).then(() => { alert("Movie Updated!"); cancelEdit('movies'); });
+                db.ref('movies/' + key).update({ category, title, thumbnail: thumb, url, type });
+                cancelEdit('movies');
+                setTimeout(() => alert("Movie Updated!"), 10);
             } else {
-                db.ref('movies').push({ title, thumbnail: thumb, url, type });
+                db.ref('movies').push({ category, title, thumbnail: thumb, url, type, timestamp: Date.now() });
                 sendNotification("🎬 New Movie Added!", `${title} মুভিটি যুক্ত হয়েছে। এখনই দেখুন!`);
-                alert("Movie Uploaded & Notified!"); clearInputs(['mv-title', 'mv-thumb', 'mv-url']);
+                clearInputs(['mv-title', 'mv-thumb', 'mv-url']);
+                setTimeout(() => alert("Movie Uploaded & Notified!"), 10);
             }
         }
 
-        function editMovie(key, title, thumb, url, type) {
+        function editMovie(key, title, thumb, url, type, categoryStr) {
             document.getElementById('mv-key').value = key; document.getElementById('mv-title').value = title;
             document.getElementById('mv-thumb').value = thumb; document.getElementById('mv-url').value = url;
-            document.getElementById('mv-type').value = type || 'free'; // Set type
+            document.getElementById('mv-type').value = type || 'free'; 
+            
+            const catArray = (categoryStr || 'movie').split(',');
+            document.querySelectorAll('.mv-cat-chk').forEach(cb => { cb.checked = catArray.includes(cb.value); });
+
             const btn = document.getElementById('mv-btn'); btn.innerText = "UPDATE MOVIE"; btn.classList.add('updating');
             document.getElementById('mv-head').innerText = "EDITING MOVIE"; document.getElementById('mv-cancel').style.display = 'block';
             window.scrollTo(0,0);
         }
 
-        // --- CARTOON FUNCTIONS (UPDATED) ---
+        // --- CARTOON FUNCTIONS ---
         function uploadCartoon() {
+            let selectedCats = [];
+            document.querySelectorAll('.ct-cat-chk:checked').forEach(cb => selectedCats.push(cb.value));
+            const category = selectedCats.length > 0 ? selectedCats.join(',') : 'cartoon';
+
             const title = document.getElementById('ct-title').value; const thumb = document.getElementById('ct-thumb').value;
             const url = document.getElementById('ct-url').value; const key = document.getElementById('ct-key').value;
-            const type = document.getElementById('ct-type').value; // Get Premium/Free
+            const type = document.getElementById('ct-type').value; 
             
             if(!title || !url) return alert("Fill all fields!");
 
             if(key) {
-                db.ref('cartoons/' + key).update({ title, thumbnail: thumb, url, type }).then(() => { alert("Cartoon Updated!"); cancelEdit('cartoons'); });
+                db.ref('cartoons/' + key).update({ category, title, thumbnail: thumb, url, type });
+                cancelEdit('cartoons');
+                setTimeout(() => alert("Cartoon Updated!"), 10);
             } else {
-                db.ref('cartoons').push({ title, thumbnail: thumb, url, type });
+                db.ref('cartoons').push({ category, title, thumbnail: thumb, url, type, timestamp: Date.now() });
                 sendNotification("🐼 New Cartoon Added!", `${title} কার্টুনটি যুক্ত হয়েছে।`);
-                alert("Cartoon Uploaded!"); clearInputs(['ct-title', 'ct-thumb', 'ct-url']);
+                clearInputs(['ct-title', 'ct-thumb', 'ct-url']);
+                setTimeout(() => alert("Cartoon Uploaded!"), 10);
             }
         }
 
-        function editCartoon(key, title, thumb, url, type) {
+        function editCartoon(key, title, thumb, url, type, categoryStr) {
             document.getElementById('ct-key').value = key; document.getElementById('ct-title').value = title;
             document.getElementById('ct-thumb').value = thumb; document.getElementById('ct-url').value = url;
-            document.getElementById('ct-type').value = type || 'free'; // Set type
+            document.getElementById('ct-type').value = type || 'free'; 
+            
+            const catArray = (categoryStr || 'cartoon').split(',');
+            document.querySelectorAll('.ct-cat-chk').forEach(cb => { cb.checked = catArray.includes(cb.value); });
+
             const btn = document.getElementById('ct-btn'); btn.innerText = "UPDATE CARTOON"; btn.classList.add('updating');
             document.getElementById('ct-head').innerText = "EDITING CARTOON"; document.getElementById('ct-cancel').style.display = 'block';
             window.scrollTo(0,0);
@@ -423,11 +551,13 @@
                 const btn = document.getElementById('an-btn'); btn.innerText = "UPLOAD ANIME & NOTIFY"; btn.classList.remove('updating');
                 document.getElementById('an-head').innerHTML = '<i class="fas fa-upload"></i> UPLOAD ANIME EPISODES'; document.getElementById('an-cancel').style.display = 'none';
             } else if(type === 'movies') {
-                document.getElementById('mv-key').value = ""; clearInputs(['mv-title', 'mv-thumb', 'mv-url']);
+                document.getElementById('mv-key').value = ""; document.querySelectorAll('.mv-cat-chk').forEach(cb => cb.checked = false); document.querySelector('.mv-cat-chk[value="movie"]').checked = true;
+                clearInputs(['mv-title', 'mv-thumb', 'mv-url']);
                 const btn = document.getElementById('mv-btn'); btn.innerText = "UPLOAD MOVIE & NOTIFY"; btn.classList.remove('updating');
                 document.getElementById('mv-head').innerHTML = '<i class="fas fa-film"></i> UPLOAD MOVIE'; document.getElementById('mv-cancel').style.display = 'none';
             } else if(type === 'cartoons') {
-                document.getElementById('ct-key').value = ""; clearInputs(['ct-title', 'ct-thumb', 'ct-url']);
+                document.getElementById('ct-key').value = ""; document.querySelectorAll('.ct-cat-chk').forEach(cb => cb.checked = false); document.querySelector('.ct-cat-chk[value="cartoon"]').checked = true;
+                clearInputs(['ct-title', 'ct-thumb', 'ct-url']);
                 const btn = document.getElementById('ct-btn'); btn.innerText = "UPLOAD CARTOON"; btn.classList.remove('updating');
                 document.getElementById('ct-head').innerHTML = '<i class="fas fa-paw"></i> UPLOAD CARTOON'; document.getElementById('ct-cancel').style.display = 'none';
             } else if (type === 'banners') {
@@ -441,15 +571,23 @@
             const url = document.getElementById('sh-url').value;
             if(!url) return;
             db.ref('shorts').push({ id: Date.now().toString(), url: url });
-            alert("Short Video Added!"); document.getElementById('sh-url').value = "";
+            document.getElementById('sh-url').value = "";
+            setTimeout(() => alert("Short Video Added!"), 10);
         }
 
         function uploadBanner() {
             const img = document.getElementById('bn-img').value; const folderName = document.getElementById('bn-folder').value.trim(); 
             const key = document.getElementById('bn-key').value; 
             if(!img) return alert("Image URL is required!");
-            if(key) { db.ref('banners/' + key).update({ image: img, folderName: folderName }).then(() => { alert("Banner Updated Successfully!"); cancelEdit('banners'); });
-            } else { db.ref('banners').push({ image: img, folderName: folderName }); alert("Home Banner Added!"); document.getElementById('bn-img').value = ""; document.getElementById('bn-folder').value = ""; }
+            if(key) { 
+                db.ref('banners/' + key).update({ image: img, folderName: folderName });
+                cancelEdit('banners');
+                setTimeout(() => alert("Banner Updated Successfully!"), 10);
+            } else { 
+                db.ref('banners').push({ image: img, folderName: folderName }); 
+                document.getElementById('bn-img').value = ""; document.getElementById('bn-folder').value = ""; 
+                setTimeout(() => alert("Home Banner Added!"), 10);
+            }
         }
 
         function editBanner(key, img, folderName) {
@@ -460,7 +598,10 @@
 
         function uploadMovieBanner() {
             const img = document.getElementById('mv-bn-img').value;
-            if(!img) return; db.ref('movie_banners').push({ image: img }); alert("Movie Banner Added!"); document.getElementById('mv-bn-img').value = "";
+            if(!img) return; 
+            db.ref('movie_banners').push({ image: img }); 
+            document.getElementById('mv-bn-img').value = "";
+            setTimeout(() => alert("Movie Banner Added!"), 10);
         }
 
         function generateCode() {
@@ -469,8 +610,11 @@
             let custom = document.getElementById('custom-code').value.trim();
             
             if(custom) {
-                custom = custom.replace(/[.#$\[\]\s]/g, '');
-                db.ref('premium_codes/' + custom).set({ status: 'unused', days: days, created: Date.now() }).then(() => { alert("Generated Custom: " + custom); document.getElementById('custom-code').value = ""; });
+                custom = custom.replace(/[.#$\[\]\s]/g, '').toUpperCase();
+                db.ref('premium_codes/' + custom).set({ status: 'unused', days: days, created: Date.now() }).then(() => { 
+                    alert("Generated Custom Code: " + custom); 
+                    document.getElementById('custom-code').value = ""; 
+                });
             } else {
                 const updates = {}; const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; 
                 for(let k=0; k<qty; k++) {
@@ -492,30 +636,127 @@
         function deleteCode(e, key) { e.stopPropagation(); if(confirm("Delete this code permanently?")) { db.ref('premium_codes/' + key).remove(); } }
         function deleteUsedCodes() { db.ref('premium_codes').once('value', s => { const updates = {}; s.forEach(c => { if(c.val().status === 'used') updates[c.key] = null; }); db.ref('premium_codes').update(updates); }); }
 
+        // --- RENDER USERS LOG ---
+        function renderUsersLog() {
+            const uc = document.getElementById('users-container');
+            if(!uc) return;
+            uc.innerHTML = "";
+            
+            usersDataList.forEach(u => {
+                const v = u.val;
+                // FIX: Check multiple possible email keys from DB
+                const email = v.email || v.Email || v.userEmail || v.user_email || 'No email saved in Database';
+                const name = v.name || 'User / ID: ' + u.key.substring(0, 8);
+                
+                // FIX: Fallback logic for Online/Offline detection
+                const isOnline = onlineUsersMap[u.key] === true || v.status === 'online' || v.isOnline === true;
+                
+                const badgeColor = isOnline ? 'var(--green)' : '#888';
+                const badgeText = isOnline ? 'ONLINE' : 'OFFLINE';
+                const borderColor = isOnline ? 'var(--green)' : 'var(--red)';
+
+                const statusBadge = `<span style="background:${badgeColor}; color:#000; padding:3px 8px; border-radius:4px; font-size:9px; font-weight:bold; font-family:'Orbitron'; letter-spacing:0.5px;">${badgeText}</span>`;
+
+                const loginTime = v.lastLogin || v.timestamp ? new Date(v.lastLogin || v.timestamp).toLocaleString() : 'No Login Record';
+                const offlineTime = v.lastOffline ? new Date(v.lastOffline).toLocaleString() : (isOnline ? '<span style="color:var(--green)">Currently Active</span>' : 'Check Last Login');
+
+                uc.innerHTML += `
+                <div class="user-card" style="border-left-color: ${borderColor};">
+                    <div style="width: 100%;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 8px;">
+                            <div class="user-email" style="display:flex; align-items:center; gap:8px;">
+                                <i class="fas fa-user-circle" style="color:var(--gold); font-size: 18px;"></i> ${name}
+                            </div>
+                            ${statusBadge}
+                        </div>
+                        <div style="font-size:13px; color:#ddd; font-family:'Outfit'; user-select: text !important; margin-bottom: 10px; background:#0a0a0a; padding:6px 10px; border-radius:6px; border:1px solid #222;">
+                            <i class="fas fa-envelope" style="color:#666; margin-right:5px;"></i> ${email}
+                        </div>
+                        <div style="display:flex; flex-wrap:wrap; gap: 10px;">
+                            <div class="user-time"><i class="fas fa-sign-in-alt" style="color:var(--green); margin-right:3px;"></i> In: ${loginTime}</div>
+                            <div class="user-time"><i class="fas fa-power-off" style="color:var(--red); margin-right:3px;"></i> Out: ${offlineTime}</div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+        }
+
         function loadAllData() {
+            // Fetch Online Users Map
+            db.ref('online_users').on('value', s => {
+                document.getElementById('online-count').innerText = s.exists() ? s.numChildren() : 0;
+                onlineUsersMap = {};
+                if(s.exists()) {
+                    s.forEach(d => { onlineUsersMap[d.key] = true; });
+                }
+                renderUsersLog();
+            });
+
+            // Fetch All Users
+            db.ref('users').on('value', s => {
+                document.getElementById('total-count').innerText = s.exists() ? s.numChildren() : 0;
+                usersDataList = [];
+                if(s.exists()) {
+                    s.forEach(d => { usersDataList.unshift({key: d.key, val: d.val()}); });
+                }
+                renderUsersLog();
+            });
+
+            // Premium Folder Design Render
             db.ref('anime').on('value', s => {
-                const c = document.getElementById('anime-list'); c.innerHTML = ""; const data = []; s.forEach(d => { data.unshift({k: d.key, v: d.val()}); }); 
-                data.forEach(item => {
-                    const d = item.v; 
-                    const safeFolder = (d.folder || "").replace(/'/g, "\\'"); 
-                    const safeTitle = (d.title || "").replace(/'/g, "\\'");
-                    const safeThumb = (d.thumbnail || "").replace(/'/g, "\\'"); 
-                    const safeUrl = (d.url || "").replace(/'/g, "\\'");
-                    const safeUrlHin = (d.url_hin || "").replace(/'/g, "\\'"); 
-                    const safeUrlEng = (d.url_eng || "").replace(/'/g, "\\'");
-                    const safeCat = (d.category || "anime").replace(/'/g, "\\'");
-                    const vipLabel = d.type === 'premium' ? '<span class="vip-badge-small">VIP</span>' : '';
-                    
-                    c.innerHTML += `<div class="data-card"><img src="${d.thumbnail || ''}">${vipLabel}<div class="data-info"><div class="data-badge">${(d.category || 'anime').toUpperCase().replace(/,/g, ' & ')}</div><div class="data-title">${d.folder || 'Unknown'}: ${d.title || 'Untitled'}</div><div class="card-btns"><button class="edit-btn" onclick="editAnime('${item.k}', '${safeFolder}', '${safeTitle}', '${safeThumb}', '${safeUrl}', '${d.type || 'free'}', '${safeUrlHin}', '${safeUrlEng}', '${safeCat}')">EDIT</button><button class="del-btn" onclick="deleteItem('anime','${item.k}')">DEL</button></div></div></div>`;
+                const c = document.getElementById('anime-list'); 
+                c.innerHTML = ""; 
+                const folders = {};
+                
+                s.forEach(d => { 
+                    const v = d.val();
+                    const fName = v.folder || 'Unknown Folders';
+                    if(!folders[fName]) folders[fName] = [];
+                    folders[fName].unshift({k: d.key, v: v}); 
                 });
+
+                for(const f in folders) {
+                    const safeId = f.replace(/[^a-zA-Z0-9]/g, '_');
+                    
+                    let html = `
+                    <div class="folder-header" onclick="toggleFolder('${safeId}')">
+                        <div class="folder-header-title">
+                            <i class="fas fa-folder-open" style="color:var(--gold); font-size:18px;"></i> 
+                            <span>${f}</span>
+                        </div> 
+                        <div class="folder-header-meta">
+                            ${folders[f].length} EP <i id="icon-${safeId}" class="fas fa-chevron-down" style="font-size:10px; margin-left:3px;"></i>
+                        </div>
+                    </div>`;
+                    
+                    html += `<div id="folder-${safeId}" class="folder-content"><div class="data-list">`;
+                    
+                    folders[f].forEach(item => {
+                        const d = item.v; 
+                        const safeFolder = (d.folder || "").replace(/'/g, "\\'"); 
+                        const safeTitle = (d.title || "").replace(/'/g, "\\'");
+                        const safeThumb = (d.thumbnail || "").replace(/'/g, "\\'"); 
+                        const safeUrl = (d.url || "").replace(/'/g, "\\'");
+                        const safeUrlHin = (d.url_hin || "").replace(/'/g, "\\'"); 
+                        const safeUrlEng = (d.url_eng || "").replace(/'/g, "\\'");
+                        const safeCat = (d.category || "anime").replace(/'/g, "\\'");
+                        const vipLabel = d.type === 'premium' ? '<span class="vip-badge-small">VIP</span>' : '';
+                        
+                        html += `<div class="data-card"><img src="${d.thumbnail || ''}">${vipLabel}<div class="data-info"><div class="data-badge">${(d.category || 'anime').toUpperCase().replace(/,/g, ' & ')}</div><div class="data-title">${d.title || 'Untitled'}</div><div class="card-btns"><button class="edit-btn" onclick="editAnime('${item.k}', '${safeFolder}', '${safeTitle}', '${safeThumb}', '${safeUrl}', '${d.type || 'free'}', '${safeUrlHin}', '${safeUrlEng}', '${safeCat}')">EDIT</button><button class="del-btn" onclick="deleteItem('anime','${item.k}')">DEL</button></div></div></div>`;
+                    });
+                    
+                    html += `</div></div>`;
+                    c.innerHTML += html;
+                }
             });
 
             db.ref('movies').on('value', s => {
                 const c = document.getElementById('movie-list'); c.innerHTML = "";
                 s.forEach(d => { 
                     const val = d.val(); const safeTitle = (val.title || "").replace(/'/g, "\\'"); const safeThumb = (val.thumbnail || "").replace(/'/g, "\\'"); const safeUrl = (val.url || "").replace(/'/g, "\\'");
+                    const safeCat = (val.category || "movie").replace(/'/g, "\\'");
                     const vipLabel = val.type === 'premium' ? '<span class="vip-badge-small">VIP</span>' : '';
-                    c.innerHTML += `<div class="data-card"><img src="${val.thumbnail || ''}">${vipLabel}<div class="data-info"><div class="data-title">${val.title || 'Untitled'}</div><div class="card-btns"><button class="edit-btn" onclick="editMovie('${d.key}', '${safeTitle}', '${safeThumb}', '${safeUrl}', '${val.type || 'free'}')">EDIT</button><button class="del-btn" onclick="deleteItem('movies','${d.key}')">DEL</button></div></div></div>`;
+                    c.innerHTML += `<div class="data-card"><img src="${val.thumbnail || ''}">${vipLabel}<div class="data-info"><div class="data-badge">${safeCat.toUpperCase().replace(/,/g, ' & ')}</div><div class="data-title">${val.title || 'Untitled'}</div><div class="card-btns"><button class="edit-btn" onclick="editMovie('${d.key}', '${safeTitle}', '${safeThumb}', '${safeUrl}', '${val.type || 'free'}', '${safeCat}')">EDIT</button><button class="del-btn" onclick="deleteItem('movies','${d.key}')">DEL</button></div></div></div>`;
                 });
             });
 
@@ -523,8 +764,9 @@
                 const c = document.getElementById('cartoon-list'); c.innerHTML = "";
                 s.forEach(d => { 
                     const val = d.val(); const safeTitle = (val.title || "").replace(/'/g, "\\'"); const safeThumb = (val.thumbnail || "").replace(/'/g, "\\'"); const safeUrl = (val.url || "").replace(/'/g, "\\'");
+                    const safeCat = (val.category || "cartoon").replace(/'/g, "\\'");
                     const vipLabel = val.type === 'premium' ? '<span class="vip-badge-small">VIP</span>' : '';
-                    c.innerHTML += `<div class="data-card"><img src="${val.thumbnail || ''}">${vipLabel}<div class="data-info"><div class="data-title" style="color:var(--cyan)">${val.title || 'Untitled'}</div><div class="card-btns"><button class="edit-btn" onclick="editCartoon('${d.key}', '${safeTitle}', '${safeThumb}', '${safeUrl}', '${val.type || 'free'}')" style="border-color:var(--cyan); color:var(--cyan)">EDIT</button><button class="del-btn" onclick="deleteItem('cartoons','${d.key}')">DEL</button></div></div></div>`;
+                    c.innerHTML += `<div class="data-card"><img src="${val.thumbnail || ''}">${vipLabel}<div class="data-info"><div class="data-badge" style="color:var(--cyan);">${safeCat.toUpperCase().replace(/,/g, ' & ')}</div><div class="data-title" style="color:var(--cyan)">${val.title || 'Untitled'}</div><div class="card-btns"><button class="edit-btn" onclick="editCartoon('${d.key}', '${safeTitle}', '${safeThumb}', '${safeUrl}', '${val.type || 'free'}', '${safeCat}')" style="border-color:var(--cyan); color:var(--cyan)">EDIT</button><button class="del-btn" onclick="deleteItem('cartoons','${d.key}')">DEL</button></div></div></div>`;
                 });
             });
 
