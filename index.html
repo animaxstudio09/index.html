@@ -1109,7 +1109,27 @@
             _syncPaletteVector('init');
             
             onSnapshot(doc(db, "tenants", currentTenant, "users", user.uid), (docSnap) => {
-                if(docSnap.exists()) { currentUserData = docSnap.data(); currentUserData.uid = user.uid; updateUserUI(); }
+                if(docSnap.exists()) { 
+                    let data = docSnap.data();
+                    
+                    // NEW: Block System Check
+                    if(data.isBlocked === true) {
+                        Swal.fire({
+                            title: 'Account Blocked!', 
+                            text: 'আপনার একাউন্টটি এডমিন দ্বারা ব্লক করা হয়েছে। দয়া করে এডমিনের সাথে যোগাযোগ করুন।', 
+                            icon: 'error', 
+                            background: '#12121a', 
+                            color: '#fff', 
+                            confirmButtonColor: '#ff003c', 
+                            allowOutsideClick: false
+                        }).then(() => { signOut(auth); });
+                        return;
+                    }
+
+                    currentUserData = data; 
+                    currentUserData.uid = user.uid; 
+                    updateUserUI(); 
+                }
             });
 
             onSnapshot(query(collection(db, "tenants", currentTenant, "users", user.uid, "notifications"), orderBy("createdAt", "desc")), (snap) => {
@@ -1216,6 +1236,7 @@
             await setDoc(doc(db, "tenants", currentTenant, "users", uid), {
                 name, email, phone, gameUID: guid, pass: pass, balance: 0, matchesPlayed: 0, matchesWon: 0,
                 refCode: myCode, referredBy: refBy || null, refStatus: refBy ? 'pending' : null,
+                isBlocked: false,
                 theme: 'theme-default',
                 isOnline: true, joinedDate: new Date().toLocaleDateString()
             });
