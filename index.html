@@ -6,6 +6,13 @@
     <!-- App Title -->
     <title id="app-browser-title">PREASENT TOUR</title>
     
+    <!-- PWA Web App Meta Tags (For Add to Home Screen & App Icon) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AR TOUR">
+    <link rel="apple-touch-icon" href="https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg">
+    <meta name="theme-color" content="#08080c">
+    
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
@@ -465,6 +472,10 @@
                 <div class="sb-item btn-anim" onclick="viewMyMatches(); toggleSidebar()"><i class="fas fa-gamepad"></i> My Matches</div>
                 <div class="sb-item btn-anim" onclick="viewHistory(); toggleSidebar()"><i class="fas fa-history"></i> Match History</div>
                 <div class="sb-item btn-anim" onclick="switchTab('wallet', document.getElementById('nav-wallet')); toggleWalletView('deposit'); toggleSidebar()"><i class="fas fa-wallet"></i> Wallet / Withdraw</div>
+                
+                <!-- PWA Install Button added here without changing structure -->
+                <div class="sb-item btn-anim install-app-btn" onclick="installPWA(); toggleSidebar()" style="color:var(--success);"><i class="fas fa-download"></i> Install App</div>
+                
                 <div class="sb-item btn-anim" onclick="switchTab('rules'); toggleSidebar()"><i class="fas fa-book-open"></i> App Rules</div>
                 <div class="sb-item btn-anim" style="color:var(--primary); border-top:1px solid var(--card-border); margin-top:10px;" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</div>
             </div>
@@ -629,6 +640,15 @@
                         <div class="menu-left">
                             <div class="m-icon" style="color:#00e676;"><i class="fas fa-plus-circle"></i></div> 
                             Add Money / Deposit
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    
+                    <!-- PWA Install Button inside Profile List -->
+                    <div class="menu-item btn-anim install-app-btn" onclick="installPWA()" style="border-color: rgba(0,230,118,0.4);">
+                        <div class="menu-left">
+                            <div class="m-icon" style="color:#00e676; background:rgba(0,230,118,0.1);"><i class="fas fa-download"></i></div> 
+                            Install / Download App
                         </div>
                         <i class="fas fa-chevron-right"></i>
                     </div>
@@ -1546,6 +1566,55 @@
     window.openTelegram = () => {
         if(globalTelegramLink && globalTelegramLink.trim() !== "") { window.open(globalTelegramLink, '_blank'); } 
         else { Swal.fire({title: 'Sorry!', text: 'অ্যাডমিন এখনো টেলিগ্রাম লিংক আপডেট করেনি।', icon: 'info', background: '#12121a', color: '#fff'}); }
+    };
+
+    // ================= PWA INSTALLATION LOGIC =================
+    const appManifest = {
+        "name": "AR TOUR",
+        "short_name": "AR TOUR",
+        "description": "AR TOUR Esports Tournament App",
+        "start_url": "/",
+        "display": "standalone",
+        "background_color": "#000000",
+        "theme_color": "#ff003c",
+        "icons": [{
+            "src": "https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg",
+            "sizes": "192x192",
+            "type": "image/jpeg"
+        }, {
+            "src": "https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg",
+            "sizes": "512x512",
+            "type": "image/jpeg"
+        }]
+    };
+    const manifestBlob = new Blob([JSON.stringify(appManifest)], {type: 'application/json'});
+    const manifestURL = URL.createObjectURL(manifestBlob);
+    document.head.insertAdjacentHTML('beforeend', `<link rel="manifest" href="${manifestURL}">`);
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+
+    window.installPWA = async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('App Installed');
+            }
+            deferredPrompt = null;
+        } else {
+            Swal.fire({
+                title: 'Install App',
+                html: 'To install, tap the <b>3 dots</b> (menu) in your browser and select <br><br><b>"Add to Home Screen"</b> or <b>"Install App"</b>.<br><br><i>For iPhone: Tap Share -> Add to Home Screen.</i>',
+                icon: 'info',
+                background: '#12121a', 
+                color: '#fff',
+                confirmButtonColor: '#ff003c'
+            });
+        }
     };
 </script>
 </body>
