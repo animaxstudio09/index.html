@@ -6,11 +6,11 @@
     <!-- App Title -->
     <title id="app-browser-title">PREASENT TOUR</title>
     
-    <!-- PWA Web App Meta Tags (For Add to Home Screen & App Icon) -->
+    <!-- PWA Web App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="AR TOUR">
-    <link rel="apple-touch-icon" href="https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg">
+    <meta id="meta-apple-title" name="apple-mobile-web-app-title" content="PREASENT TOUR">
+    <link id="meta-apple-icon" rel="apple-touch-icon" href="">
     <meta name="theme-color" content="#08080c">
     
     <!-- Fonts & Icons -->
@@ -441,7 +441,7 @@
         </div>
 
         <div class="auth-box hidden fade-in" id="signup-box">
-            <h2>JOIN <span>PREASENT TOUR<</span></h2>
+            <h2>JOIN <span>AR TOUR</span></h2>
             <form onsubmit="event.preventDefault(); registerUser();">
                 <input type="text" id="reg-name" class="auth-input" placeholder="Full Name" autocomplete="name" required>
                 <input type="email" id="reg-email" class="auth-input" placeholder="Email Address" autocomplete="email" required>
@@ -487,7 +487,7 @@
                 <i class="fas fa-bars btn-anim" style="font-size: 1.3rem; cursor: pointer; color: var(--text-main);" onclick="toggleSidebar()"></i>
                 <div class="brand-logo">
                     <img src="https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg" id="header-app-logo"> 
-                    <span id="header-app-name">PREASENT TOUR<</span>
+                    <span id="header-app-name">AR TOUR</span>
                 </div>
             </div>
             <div class="header-right">
@@ -1290,13 +1290,55 @@
         if(!document.getElementById('tab-matches').classList.contains('hidden')) renderMatches(); if(!document.getElementById('tab-history').classList.contains('hidden')) viewHistory();
     });
 
+    // PWA MANIFEST DYNAMIC UPDATER 
+    function updatePWAManifest(appName, appLogo) {
+        document.getElementById('meta-apple-title').content = appName;
+        document.getElementById('meta-apple-icon').href = appLogo;
+
+        const dynamicManifest = {
+            "name": appName,
+            "short_name": appName,
+            "description": appName + " Esports Tournament Platform",
+            "start_url": "/",
+            "display": "standalone",
+            "background_color": "#000000",
+            "theme_color": "#ff003c",
+            "icons": [{
+                "src": appLogo,
+                "sizes": "192x192",
+                "type": "image/png",
+                "purpose": "any maskable"
+            }, {
+                "src": appLogo,
+                "sizes": "512x512",
+                "type": "image/png",
+                "purpose": "any maskable"
+            }]
+        };
+        const manifestBlob = new Blob([JSON.stringify(dynamicManifest)], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        
+        let oldManifest = document.getElementById('dynamic-manifest-link');
+        if(oldManifest) oldManifest.remove();
+        
+        document.head.insertAdjacentHTML('beforeend', `<link rel="manifest" id="dynamic-manifest-link" href="${manifestURL}">`);
+    }
+
     onSnapshot(doc(db, "settings", currentTenant), (docSnap) => {
         if(docSnap.exists()){
             const data = docSnap.data(); window.appSettings = data; globalAppName = data.appName || "AR TOUR";
             document.getElementById('app-browser-title').innerText = globalAppName;
             if(document.getElementById('header-app-name')) document.getElementById('header-app-name').innerText = globalAppName;
             if(data.telegramLink) globalTelegramLink = data.telegramLink; // TELEGRAM LINK FIX
-            if(data.appLogo) { globalAppLogo = data.appLogo; if(document.getElementById('login-app-logo')) document.getElementById('login-app-logo').src = globalAppLogo; if(document.getElementById('header-app-logo')) document.getElementById('header-app-logo').src = globalAppLogo; if(allMatches.length > 0) renderMatches(); }
+            if(data.appLogo) { 
+                globalAppLogo = data.appLogo; 
+                if(document.getElementById('login-app-logo')) document.getElementById('login-app-logo').src = globalAppLogo; 
+                if(document.getElementById('header-app-logo')) document.getElementById('header-app-logo').src = globalAppLogo; 
+                if(allMatches.length > 0) renderMatches(); 
+            }
+            
+            // --> FIRE MANIFEST UPDATE HERE <--
+            updatePWAManifest(globalAppName, globalAppLogo);
             
             // Fixed Slider Animation Logic
             if(data.sliders && data.sliders.length > 0) { 
@@ -1569,28 +1611,6 @@
     };
 
     // ================= PWA INSTALLATION LOGIC =================
-    const appManifest = {
-        "name": "AR TOUR",
-        "short_name": "AR TOUR",
-        "description": "AR TOUR Esports Tournament App",
-        "start_url": "/",
-        "display": "standalone",
-        "background_color": "#000000",
-        "theme_color": "#ff003c",
-        "icons": [{
-            "src": "https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg",
-            "sizes": "192x192",
-            "type": "image/jpeg"
-        }, {
-            "src": "https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg",
-            "sizes": "512x512",
-            "type": "image/jpeg"
-        }]
-    };
-    const manifestBlob = new Blob([JSON.stringify(appManifest)], {type: 'application/json'});
-    const manifestURL = URL.createObjectURL(manifestBlob);
-    document.head.insertAdjacentHTML('beforeend', `<link rel="manifest" href="${manifestURL}">`);
-
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
