@@ -705,7 +705,7 @@
                             নিচের দেওয়া নাম্বারে সেন্ড মানি (Send Money) করুন। টাকা পাঠানো হয়ে গেলে নিচের ফর্মটি সঠিকভাবে পূরণ করুন।
                         </p>
                         
-                        <div class="admin-number btn-anim" onclick="copyText('01600678966')" title="Click to copy">
+                        <div class="admin-number btn-anim" id="dynamic-admin-number" onclick="copyText('01600678966')" title="Click to copy">
                             01600678966 <i class="fas fa-copy" style="font-size:1rem; margin-left:8px; color:var(--text-main);"></i>
                         </div>
 
@@ -732,7 +732,7 @@
                     <div class="fund-box fade-in">
                         <div class="fund-title"><i class="fas fa-hand-holding-usd" style="color:var(--primary);"></i> Withdraw Funds</div>
                         <p class="bangla-text" style="font-size: 0.8rem; color: #ccc; margin-bottom: 20px; background: rgba(255,0,60,0.1); padding: 15px; border-radius: 10px; border: 1px dashed rgba(255,0,60,0.3); line-height: 1.6;">
-                            ⚠️ <b>উইথড্র নিয়ম:</b> সর্বনিম্ন উইথড্র ১০০ টাকা। চার্জ: ১০০ টাকায় ৫৳, ৫০০ টাকায় ১০৳, ১০০০ টাকায় ২০৳। রিকোয়েস্ট দেওয়ার ২৪ ঘন্টার মধ্যে পেমেন্ট ক্লিয়ার করা হবে।
+                            ⚠️ <b>উইথড্র নিয়ম:</b> সর্বনিম্ন উইথড্র ১০০ টাকা। চার্জ: ১০০ টাকায় ৫৳, ৫০০ টাকায় ১০৳, ১০০০ টাকায় ২০৳। রিকোয়েস্ট দেওয়ার ২৪ ঘন্টার মধ্যে পেমেন্ট ক্লিয়ার করা ক্ষমতায় থাকে।
                         </p>
 
                         <label style="font-size:0.8rem; font-weight:600; color:var(--text-muted); display:block; margin-bottom:6px;">Amount</label>
@@ -1306,6 +1306,15 @@
             }
             if(data.profileBanner) {
                 let el = document.getElementById('p-banner-div'); if(el) el.style.backgroundImage = `url('${data.profileBanner}')`;
+            }
+
+            // DEPOSIT NUMBER DYNAMIC LOGIC
+            if(data.adminNumber) {
+                let adminNumEl = document.getElementById('dynamic-admin-number');
+                if(adminNumEl) {
+                    adminNumEl.innerHTML = `${data.adminNumber} <i class="fas fa-copy" style="font-size:1rem; margin-left:8px; color:var(--text-main);"></i>`;
+                    adminNumEl.setAttribute('onclick', `copyText('${data.adminNumber}')`);
+                }
             }
 
             // ================= FULLY DYNAMIC HOME CATEGORIES FROM ADMIN PANEL =================
