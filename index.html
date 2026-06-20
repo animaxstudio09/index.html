@@ -1000,7 +1000,7 @@
             <div class="modal-box">
                 <i class="fas fa-times close-btn btn-anim" onclick="closeReferralModal()"></i>
                 <div class="fund-title" style="margin-bottom: 10px; justify-content: center;"><i class="fas fa-users" style="color:var(--warning);"></i> Referral Dashboard</div>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px; text-align:center;">আপনার রেফার কোডটি কপি করতে নিচের কোডের উপর ক্লিক করুন।</p>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px; text-align:center;">আপনার রেফার কোডটি কপি করতে নিচের কোডের উপর ক্লিক করুন。</p>
                 
                 <div class="admin-number btn-anim" id="modal-ref-code" onclick="copyText(this.innerText.trim())" title="Click to copy">
                     LOAD <i class="fas fa-copy" style="font-size:1rem; margin-left:8px;"></i>
@@ -1164,6 +1164,29 @@
             if(progressText) progressText.innerText = loadProgress + '%';
         }
     }, 30); // smooth, fast load ~1.5 - 2s total
+
+    // ================= GLOBAL COUNTDOWN UPDATER =================
+    window.updateCountdowns = () => {
+        const now = new Date().getTime();
+        document.querySelectorAll('.match-countdown').forEach(el => {
+            const matchTime = new Date(el.getAttribute('data-time')).getTime();
+            const diff = matchTime - now;
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                let timeText = "(In ";
+                if(days > 0) timeText += `${days}d `;
+                if(hours > 0) timeText += `${hours}h `;
+                timeText += `${mins}m)`;
+                el.innerText = timeText;
+            } else {
+                el.innerText = "(Started)";
+                el.style.color = "var(--text-muted)";
+            }
+        });
+    };
+    setInterval(window.updateCountdowns, 60000); // Update every 1 minute
 
     // ================= GENERAL FUNCTIONS =================
     
@@ -1827,6 +1850,9 @@
             }
         });
         
+        // ================= MATCH SORTING (CLOSEST TIME FIRST) =================
+        filtered.sort((a, b) => new Date(a.matchTime).getTime() - new Date(b.matchTime).getTime());
+        
         if(filtered.length === 0) { 
             container.innerHTML = `<div style="text-align:center; padding: 40px; color:var(--text-muted);"><i class="fas fa-gamepad" style="font-size:3rem; margin-bottom:15px; opacity:0.5;"></i><p style="font-weight:700; font-size:1.2rem;">No Matches Available</p></div>`; 
             return; 
@@ -1838,10 +1864,11 @@
             let matchIdShort = m.id.substring(0,5).toUpperCase(); let dateStr = new Date(m.matchTime).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
             let typeLabel = "SOLO"; if(m.category && m.category.includes('DUO')) typeLabel = "DUO"; if(m.category && m.category.includes('SQUAD')) typeLabel = "SQUAD";
 
+            // NEW COUNTDOWN SPAN ADDED NEXT TO DATE
             html += `
             <div class="match-card fade-in">
                 <div class="mc-id">#${matchIdShort}</div>
-                <div class="mc-header"><div style="padding-right: 40px;"><div class="mc-title">${m.title}</div><div class="mc-time"><i class="fas fa-calendar-alt"></i> ${dateStr}</div></div></div>
+                <div class="mc-header"><div style="padding-right: 40px;"><div class="mc-title">${m.title}</div><div class="mc-time"><i class="fas fa-calendar-alt"></i> ${dateStr} <span class="match-countdown" data-time="${m.matchTime}" style="color: var(--primary); margin-left: 8px; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.5px;"></span></div></div></div>
                 <div class="mc-stats-grid">
                     <div class="mc-stat"><i class="fas fa-coins text-primary"></i> <span class="prog-text">Fee</span> <strong>৳${m.entryFee}</strong></div>
                     <div class="mc-stat"><i class="fas fa-trophy text-success"></i> <span class="prog-text">Prize</span> <strong>৳${m.totalPrize}</strong></div>
@@ -1865,6 +1892,7 @@
             </div>`;
         });
         container.innerHTML = html;
+        window.updateCountdowns(); // Initial countdown text setup
     };
 
     window.showSlots = (matchId) => {
@@ -1894,6 +1922,9 @@
         
         const pastMatches = allMatches.filter(m => new Date(m.matchTime).getTime() <= new Date().getTime() && m.players && currentUserData && m.players.includes(currentUserData.uid));
         
+        // SORT HISTORY (MOST RECENT FIRST)
+        pastMatches.sort((a, b) => new Date(b.matchTime).getTime() - new Date(a.matchTime).getTime());
+
         if(pastMatches.length === 0) { 
             container.innerHTML = `<div style="text-align:center; padding: 60px 20px; color:var(--text-muted);"><i class="fas fa-history" style="font-size:3rem; margin-bottom:15px; opacity:0.5;"></i><h3 style="font-weight:700; font-size:1.3rem;">No Match History</h3><p style="font-size:0.85rem; margin-top:5px;">You haven't played any matches yet.</p></div>`; 
             return; 
