@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- App Title -->
-    <title id="app-browser-title">PREASENT TOUR</title>
+    <title id="app-browser-title">PREASENT TUR</title>
     
     <!-- PWA Web App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta id="meta-apple-title" name="apple-mobile-web-app-title" content="PREASENT TOUR">
+    <meta id="meta-apple-title" name="apple-mobile-web-app-title" content="PREASENT TUR">
     <link id="meta-apple-icon" rel="apple-touch-icon" href="">
     <meta name="theme-color" content="#08080c">
     
@@ -53,11 +53,19 @@
 
         /* ================= PREMIUM LOADING SCREEN ================= */
         #premium-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #08080c; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease, visibility 0.6s; }
-        .loader-logo { width: 130px; height: 130px; border-radius: 25px; box-shadow: var(--glow); border: 2px solid var(--primary); animation: pulseLoader 1.5s infinite alternate; object-fit: cover; margin-bottom: 30px; }
+        .loader-logo { width: 130px; height: 130px; border-radius: 25px; box-shadow: var(--glow); border: 2px solid var(--primary); animation: pulseLoader 1.5s infinite alternate; object-fit: cover; margin-bottom: 20px; }
         @keyframes pulseLoader { 0% { transform: scale(0.95); box-shadow: 0 0 10px rgba(255,0,60,0.3); } 100% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,0,60,0.8); } }
-        .spinner-ring { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spinRing 1s linear infinite; }
-        .loader-text { margin-top: 15px; font-weight: 700; font-size: 1.1rem; color: var(--text-main); letter-spacing: 2px; text-transform: uppercase; animation: flashText 1.5s infinite; }
-        @keyframes flashText { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        .loader-text { margin-top: 10px; margin-bottom: 30px; font-weight: 800; font-size: 1.3rem; color: var(--text-main); letter-spacing: 2px; text-transform: uppercase; animation: flashText 1.5s infinite; text-shadow: var(--glow); }
+        @keyframes flashText { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        
+        /* NEW 1-100% PROGRESS BAR CSS */
+        .progress-wrapper { width: 65%; max-width: 280px; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); }
+        .progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary-dark), var(--primary), #ff3366); border-radius: 20px; box-shadow: 0 0 15px var(--primary); transition: width 0.1s ease-out; position: relative; }
+        .progress-fill::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shimmer 1s infinite linear; }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .progress-text { margin-top: 15px; font-size: 1.1rem; font-weight: 800; color: var(--primary); letter-spacing: 1.5px; text-shadow: 0 0 12px rgba(255,0,60,0.6); font-family: 'Courier New', monospace; }
 
         /* ================= LIVE TOAST NOTIFICATION ================= */
         .live-toast { position: absolute; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: rgba(18, 18, 26, 0.95); backdrop-filter: blur(10px); border: 1px solid var(--primary); padding: 12px 20px; border-radius: 30px; display: flex; align-items: center; gap: 12px; z-index: 2500; box-shadow: var(--glow); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; min-width: 280px; }
@@ -71,8 +79,6 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .btn-anim:active { transform: scale(0.94); transition: 0.15s ease-in-out; }
-        
-        @keyframes spinRing { 100% { transform: rotate(360deg); } }
 
         /* ================= AUTHENTICATION UI ================= */
         #auth-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top, #1a0006 0%, var(--bg-app) 100%); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px;}
@@ -89,11 +95,9 @@
         /* ================= HEADER ================= */
         .header { background: rgba(18, 18, 26, 0.95); backdrop-filter: blur(15px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid var(--card-border);}
         
-        /* UPDATED: App Name in header slightly smaller */
         .brand-logo { font-weight: 800; color: var(--text-main); font-size: 1.05rem; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; cursor: default;}
         .brand-logo img { width: 35px; height: 35px; border-radius: 8px; box-shadow: var(--glow); object-fit: cover;}
         
-        /* HEADER RIGHT SIDE (BELL + BALANCE) */
         .header-right { display: flex; align-items: center; gap: 12px; }
         .notif-bell { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; color: var(--text-main); font-size: 1.1rem; transition: 0.3s;}
         .notif-bell:hover { background: rgba(255,0,60,0.1); border-color: var(--primary); color: var(--primary);}
@@ -124,7 +128,6 @@
         .section-header h2 { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;}
 
         /* ================= HOME TAB ================= */
-        /* UPDATED: Slide pointer for link click */
         .slider-container { margin: 15px 20px; border-radius: 16px; height: 170px; overflow: hidden; position: relative; box-shadow: var(--glow-card); border: 1px solid var(--card-border);}
         .slides { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; }
         .slide { min-width: 100%; height: 100%; background-size: cover; background-position: center; cursor: pointer; }
@@ -134,7 +137,6 @@
 
         .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px;}
         
-        /* UPDATED: Slightly Smaller Category Cards as requested */
         .cat-card { height: 105px !important; min-height: 105px !important; max-height: 105px !important; border-radius: 16px; position: relative; overflow: hidden; cursor: pointer; background: #000; border: 1px solid var(--card-border); box-shadow: 0 4px 15px rgba(0,0,0,0.5);}
         .cat-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 16px; border: 1.5px solid rgba(255, 255, 255, 0.25); box-shadow: inset 0 0 35px rgba(135, 206, 235, 0.5); pointer-events: none; z-index: 2; transition: 0.3s; }
         .cat-card img.bg-img { width: 100%; height: 100%; object-fit: cover; opacity: 1; transition: 0.5s;}
@@ -526,11 +528,28 @@
 </head>
 <body>
 
-<!-- PREMIUM LOADING SCREEN -->
+<!-- PREMIUM LOADING SCREEN (UPDATED) -->
 <div id="premium-loader">
-    <img src="https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg" id="loader-app-logo" class="loader-logo" alt="App Logo">
-    <div class="spinner-ring"></div>
-    <div class="loader-text" id="loader-app-name">AR TOUR</div>
+    <!-- INSTANT LOAD HTML DEFAULT LOGO -->
+    <img src="https://i.ibb.co.com/wrQs5Rtc/IMG-20260619-WA0010.jpg" id="loader-app-logo" class="loader-logo" alt="App Logo">
+    <div class="loader-text" id="loader-app-name">PREASENT TUR</div>
+    
+    <!-- INSTANT CACHE LOAD SCRIPT -->
+    <script>
+        (function() {
+            var cLogo = localStorage.getItem('app_logo_cache');
+            var cName = localStorage.getItem('app_name_cache');
+            if(cLogo) document.getElementById('loader-app-logo').src = cLogo;
+            if(cName) document.getElementById('loader-app-name').innerText = cName;
+        })();
+    </script>
+    
+    <div class="progress-wrapper">
+        <div class="progress-bar">
+            <div class="progress-fill" id="loader-progress-fill"></div>
+        </div>
+        <div class="progress-text" id="loader-progress-text">0%</div>
+    </div>
 </div>
 
 <!-- LIVE TOAST NOTIFICATION -->
@@ -543,10 +562,19 @@
 
     <!-- ================= AUTHENTICATION SCREEN ================= -->
     <div id="auth-screen">
-        <img src="https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg" id="login-app-logo" class="auth-logo" alt="App Logo">
+        <!-- INSTANT LOAD HTML DEFAULT LOGO -->
+        <img src="https://i.ibb.co.com/wrQs5Rtc/IMG-20260619-WA0010.jpg" id="login-app-logo" class="auth-logo" alt="App Logo">
         
+        <!-- INSTANT CACHE LOAD FOR LOGIN SCREEN -->
+        <script>
+            (function() {
+                var cLogoLogin = localStorage.getItem('app_logo_cache');
+                if(cLogoLogin) document.getElementById('login-app-logo').src = cLogoLogin;
+            })();
+        </script>
+
         <div class="auth-box fade-in" id="login-box">
-            <h2>LOGIN <span>AR</span></h2>
+            <h2>LOGIN <span>PREASENT</span></h2>
             <form onsubmit="event.preventDefault(); loginUser();">
                 <input type="email" id="log-email" class="auth-input" placeholder="Email Address" autocomplete="username" required>
                 <input type="password" id="log-pass" class="auth-input" placeholder="Password" autocomplete="current-password" required>
@@ -556,7 +584,7 @@
         </div>
 
         <div class="auth-box hidden fade-in" id="signup-box">
-            <h2>JOIN <span>AR TOUR</span></h2>
+            <h2>JOIN <span>PREASENT TUR</span></h2>
             <form onsubmit="event.preventDefault(); registerUser();">
                 <input type="text" id="reg-name" class="auth-input" placeholder="Full Name" autocomplete="name" required>
                 <input type="email" id="reg-email" class="auth-input" placeholder="Email Address" autocomplete="email" required>
@@ -605,8 +633,19 @@
             <div style="display: flex; align-items: center; gap: 12px;">
                 <i class="fas fa-bars btn-anim" style="font-size: 1.3rem; cursor: pointer; color: var(--text-main);" onclick="toggleSidebar()"></i>
                 <div class="brand-logo">
-                    <img src="https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg" id="header-app-logo"> 
-                    <span id="header-app-name">AR TOUR</span>
+                    <!-- INSTANT LOAD HTML DEFAULT LOGO & NAME -->
+                    <img src="https://i.ibb.co.com/wrQs5Rtc/IMG-20260619-WA0010.jpg" id="header-app-logo"> 
+                    <span id="header-app-name">PREASENT TUR</span>
+                    
+                    <!-- INSTANT CACHE LOAD FOR HEADER -->
+                    <script>
+                        (function() {
+                            var cLogoHead = localStorage.getItem('app_logo_cache');
+                            var cNameHead = localStorage.getItem('app_name_cache');
+                            if(cLogoHead) document.getElementById('header-app-logo').src = cLogoHead;
+                            if(cNameHead) document.getElementById('header-app-name').innerText = cNameHead;
+                        })();
+                    </script>
                 </div>
             </div>
             <div class="header-right">
@@ -1086,8 +1125,11 @@
     let currentUserData = null;
     let allMatches = [];
     let currentCategory = 'ALL';
-    let globalAppLogo = "https://i.ibb.co.com/q3nvB821/360-F-1001641661-7-JWB9f-O7-XAKal9-SXT2-FSf8as-EUb1-Qz-Im.jpg";
-    let globalAppName = "AR TOUR"; 
+    
+    // UPDATED DEFAULTS FOR INSTANT LOAD
+    let globalAppLogo = "https://i.ibb.co.com/wrQs5Rtc/IMG-20260619-WA0010.jpg";
+    let globalAppName = "PREASENT TUR"; 
+    
     let globalTelegramLink = ""; 
     let globalAdminNumber = "01600678966";
     window.appSettings = {};
@@ -1096,15 +1138,32 @@
     let totalSlides = 0;
     let slideInterval = null;
     
-    // ================= UI LOADING FADE OUT =================
-    setTimeout(() => {
-        const loader = document.getElementById('premium-loader');
-        if(loader) { 
-            loader.style.opacity = '0'; 
-            setTimeout(() => loader.remove(), 600); 
+    // ================= UI LOADING 1 TO 100% (NEW) =================
+    let loadProgress = 0;
+    const progressFill = document.getElementById('loader-progress-fill');
+    const progressText = document.getElementById('loader-progress-text');
+    
+    let loadInterval = setInterval(() => {
+        loadProgress += Math.floor(Math.random() * 4) + 1; // 1 to 4 increments
+        if(loadProgress >= 100) {
+            loadProgress = 100;
+            clearInterval(loadInterval);
+            if(progressFill) progressFill.style.width = '100%';
+            if(progressText) progressText.innerText = '100%';
+            
+            setTimeout(() => {
+                const loader = document.getElementById('premium-loader');
+                if(loader) { 
+                    loader.style.opacity = '0'; 
+                    setTimeout(() => loader.remove(), 600); 
+                }
+                document.getElementById('appBox').classList.remove('hidden');
+            }, 400); // 0.4s pause after hitting 100%
+        } else {
+            if(progressFill) progressFill.style.width = loadProgress + '%';
+            if(progressText) progressText.innerText = loadProgress + '%';
         }
-        document.getElementById('appBox').classList.remove('hidden');
-    }, 2000);
+    }, 30); // smooth, fast load ~1.5 - 2s total
 
     // ================= GENERAL FUNCTIONS =================
     
@@ -1471,7 +1530,7 @@
             });
             
             await addDoc(collection(db, "tenants", currentTenant, "users", uid, "notifications"), {
-                title: "Welcome to AR TOUR! 🎉",
+                title: "Welcome to PREASENT TUR! 🎉",
                 message: "Thank you for joining. Play matches and start earning real money today!",
                 type: "info",
                 createdAt: new Date()
@@ -1592,7 +1651,11 @@
             const data = docSnap.data(); 
             window.appSettings = data; 
             
-            globalAppName = data.appName || "AR TOUR";
+            globalAppName = data.appName || "PREASENT TUR";
+            
+            // NEW: SAVING TO CACHE FOR INSTANT LOAD NEXT TIME
+            localStorage.setItem('app_name_cache', globalAppName);
+            
             document.getElementById('app-browser-title').innerText = globalAppName;
             
             if(document.getElementById('header-app-name')) document.getElementById('header-app-name').innerText = globalAppName;
@@ -1603,6 +1666,10 @@
 
             if(data.appLogo) { 
                 globalAppLogo = data.appLogo; 
+                
+                // NEW: SAVING TO CACHE FOR INSTANT LOAD NEXT TIME
+                localStorage.setItem('app_logo_cache', globalAppLogo);
+                
                 if(document.getElementById('login-app-logo')) document.getElementById('login-app-logo').src = globalAppLogo; 
                 if(document.getElementById('header-app-logo')) document.getElementById('header-app-logo').src = globalAppLogo; 
                 if(document.getElementById('loader-app-logo')) document.getElementById('loader-app-logo').src = globalAppLogo; 
@@ -1611,30 +1678,62 @@
             
             updatePWAManifest(globalAppName, globalAppLogo);
             
-            // ================= SLIDER WITH CLICKABLE LINKS =================
-            if(data.sliders && data.sliders.length > 0) { 
+            // ================= SLIDER WITH CLICKABLE LINKS (100% FAIL-PROOF) =================
+            let sliderData = [];
+            if (data.sliders) {
+                if (Array.isArray(data.sliders)) {
+                    sliderData = data.sliders;
+                } else if (typeof data.sliders === 'object') {
+                    sliderData = Object.values(data.sliders);
+                }
+            }
+            if (sliderData.length === 0) {
+                if(data.slider1 && data.slider1.trim() !== "") sliderData.push(data.slider1);
+                if(data.slider2 && data.slider2.trim() !== "") sliderData.push(data.slider2);
+                if(data.slider3 && data.slider3.trim() !== "") sliderData.push(data.slider3);
+                if(data.slider4 && data.slider4.trim() !== "") sliderData.push(data.slider4);
+                if(data.slider5 && data.slider5.trim() !== "") sliderData.push(data.slider5);
+                if(data.banner1 && data.banner1.trim() !== "") sliderData.push(data.banner1);
+                if(data.banner2 && data.banner2.trim() !== "") sliderData.push(data.banner2);
+                if(data.banner3 && data.banner3.trim() !== "") sliderData.push(data.banner3);
+            }
+
+            if(sliderData.length > 0) { 
                 let sHtml = ''; 
-                totalSlides = data.sliders.length; 
+                let validSlides = 0;
                 
-                data.sliders.forEach(imgData => { 
-                    // Handle both old format (string) and new format (object with link)
-                    let url = typeof imgData === 'string' ? imgData : imgData.image;
-                    let link = typeof imgData === 'object' && imgData.link ? `onclick="window.open('${imgData.link}', '_blank')"` : "";
+                sliderData.forEach(imgData => { 
+                    let url = "";
+                    let link = "";
                     
-                    sHtml += `<div class="slide" ${link} style="background-image: url('${url}');"></div>`; 
+                    if(typeof imgData === 'string') {
+                        url = imgData;
+                    } else if(typeof imgData === 'object' && imgData !== null) {
+                        // Supports 'image', 'url', or 'img' keys from DB
+                        url = imgData.image || imgData.url || imgData.img || "";
+                        link = imgData.link ? `onclick="window.open('${imgData.link}', '_blank')"` : "";
+                    }
+                    
+                    if(url && url.trim() !== '' && url !== 'undefined') {
+                        sHtml += `<div class="slide" ${link} style="background-image: url('${url}');"></div>`; 
+                        validSlides++;
+                    }
                 }); 
                 
-                document.getElementById('slider-track').innerHTML = sHtml; 
-                slideIndex = 0; 
-                document.getElementById('slider-track').style.transform = `translateX(0%)`;
-                
-                if(slideInterval) clearInterval(slideInterval);
-                if(totalSlides > 1) {
-                    slideInterval = setInterval(() => {
-                        slideIndex++;
-                        if(slideIndex >= totalSlides) slideIndex = 0;
-                        document.getElementById('slider-track').style.transform = `translateX(-${slideIndex * 100}%)`;
-                    }, 3000);
+                if(validSlides > 0) {
+                    totalSlides = validSlides;
+                    document.getElementById('slider-track').innerHTML = sHtml; 
+                    slideIndex = 0; 
+                    document.getElementById('slider-track').style.transform = `translateX(0%)`;
+                    
+                    if(slideInterval) clearInterval(slideInterval);
+                    if(totalSlides > 1) {
+                        slideInterval = setInterval(() => {
+                            slideIndex++;
+                            if(slideIndex >= totalSlides) slideIndex = 0;
+                            document.getElementById('slider-track').style.transform = `translateX(-${slideIndex * 100}%)`;
+                        }, 3000);
+                    }
                 }
             }
             
