@@ -120,7 +120,7 @@
         .sb-item:hover i { color: var(--primary); }
 
         /* ================= MAIN SCROLL AREA ================= */
-        .main-content { flex: 1; overflow-y: auto; padding-bottom: 90px;}
+        .main-content { flex: 1; overflow-y: auto; padding-bottom: 100px;} /* Increased bottom padding for floating button */
         .main-content::-webkit-scrollbar { display: none; }
         
         .section-header { display: flex; align-items: center; gap: 15px; padding: 20px; background: rgba(18, 18, 26, 0.9); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--card-border);}
@@ -149,7 +149,7 @@
         }
         .match-count-badge i { color: var(--success); font-size: 0.55rem; animation: pulseLive 1.5s infinite; }
         
-        /* ================= LEADERBOARD TAB (NEW) ================= */
+        /* ================= LEADERBOARD TAB ================= */
         .rank-item { display: flex; align-items: center; background: rgba(0,0,0,0.5); padding: 12px 15px; margin: 0 20px 10px; border-radius: 12px; border: 1px solid var(--card-border); gap: 15px; transition: 0.3s;}
         .rank-item.top-1 { background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(0,0,0,0.8)); border-color: rgba(255, 215, 0, 0.4); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);}
         .rank-item.top-2 { background: linear-gradient(90deg, rgba(192, 192, 192, 0.1), rgba(0,0,0,0.8)); border-color: rgba(192, 192, 192, 0.4);}
@@ -163,6 +163,19 @@
         .rank-stats { font-size: 0.75rem; color: var(--text-muted); margin-top: 3px;}
         .rank-stats span { color: var(--primary); font-weight: 700; }
         .rank-prize { font-weight: 800; color: var(--success); font-size: 1.1rem; }
+
+        /* ================= NEW: RESULTS TAB (PREMIUM DESIGN) ================= */
+        .res-match-card { background: linear-gradient(145deg, #12121a, #0d0d14); margin: 0 20px 20px; border-radius: 16px; border: 1px solid var(--card-border); overflow: hidden; box-shadow: var(--glow-card); }
+        .res-header { padding: 15px; background: rgba(0,0,0,0.6); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .res-title { font-weight: 800; color: var(--primary); font-size: 1rem; text-transform: uppercase;}
+        .res-date { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 6px;}
+        .res-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .res-table th { padding: 12px 15px; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02); }
+        .res-table td { padding: 12px 15px; font-size: 0.85rem; font-weight: 600; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .res-rank-1 { color: #FFD700; text-shadow: 0 0 10px rgba(255,215,0,0.5); font-size: 1.1rem; font-weight: 800; }
+        .res-rank-2 { color: #C0C0C0; font-size: 1rem; font-weight: 800; }
+        .res-rank-3 { color: #CD7F32; font-size: 1rem; font-weight: 800; }
+        .res-prize { color: var(--success); font-weight: 800; }
 
         /* ================= MATCH CARDS ================= */
         .match-card { background: var(--card-bg); margin: 0 20px 20px; border-radius: 16px; border: 1px solid var(--card-border); overflow: hidden; box-shadow: var(--glow-card); position: relative;}
@@ -193,6 +206,14 @@
         .mc-3-btns button i { font-size: 1.1rem; color: var(--text-muted); }
         .mc-3-btns button:hover { background: rgba(255,255,255,0.08); border-color: var(--primary); }
         .mc-3-btns button:hover i { color: var(--primary); }
+
+        /* MATCH COUNTDOWN BOTTOM BANNER */
+        .mc-countdown-banner { background: #00a859; color: #ffffff; text-align: center; padding: 12px 5px; font-size: 0.9rem; font-weight: 800; letter-spacing: 0.5px; width: 100%; box-shadow: inset 0 2px 10px rgba(0,0,0,0.2); }
+        .mc-countdown-banner.started { background: rgba(255,255,255,0.05); color: var(--text-muted); border-top: 1px solid var(--card-border); box-shadow: none; }
+
+        /* ================= FLOATING SUPPORT BUTTON ================= */
+        .floating-support-btn { position: absolute; bottom: 85px; right: 20px; width: 55px; height: 55px; background: linear-gradient(45deg, var(--primary-dark), var(--primary)); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.6rem; box-shadow: 0 4px 15px rgba(255,0,60,0.6); z-index: 500; cursor: pointer; border: 2px solid var(--card-bg); transition: transform 0.3s; }
+        .floating-support-btn i { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
 
         /* ================= NOTIFICATIONS TAB ================= */
         .notif-card { background: var(--card-bg); margin: 0 20px 15px; border-radius: 14px; border: 1px solid var(--card-border); padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: flex; gap: 15px; position: relative; overflow: hidden; transition: 0.3s;}
@@ -615,10 +636,10 @@
                 <div class="sb-item btn-anim" onclick="viewMyMatches(); toggleSidebar()"><i class="fas fa-gamepad"></i> My Matches</div>
                 <div class="sb-item btn-anim" onclick="viewHistory(); toggleSidebar()"><i class="fas fa-history"></i> Match History</div>
                 
-                <!-- NEW: Leaderboard added to Sidebar -->
                 <div class="sb-item btn-anim" onclick="viewLeaderboard(); toggleSidebar()"><i class="fas fa-trophy"></i> Leaderboard</div>
+                <div class="sb-item btn-anim" onclick="loadResults(); toggleSidebar()"><i class="fas fa-poll-h"></i> Match Results</div>
                 
-                <div class="sb-item btn-anim" onclick="switchTab('wallet', document.getElementById('nav-wallet')); toggleWalletView('deposit'); toggleSidebar()"><i class="fas fa-wallet"></i> Wallet / Withdraw</div>
+                <div class="sb-item btn-anim" onclick="switchTab('wallet', null); toggleWalletView('deposit'); toggleSidebar()"><i class="fas fa-wallet"></i> Wallet / Withdraw</div>
                 
                 <!-- PWA Install Button -->
                 <div class="sb-item btn-anim install-app-btn" onclick="installPWA(); toggleSidebar()" style="color:var(--success);"><i class="fas fa-download"></i> Install App</div>
@@ -653,7 +674,7 @@
                     <i class="fas fa-bell"></i>
                     <span class="notif-badge hidden" id="notif-badge">0</span>
                 </div>
-                <div class="balance-pill btn-anim" onclick="switchTab('wallet', document.getElementById('nav-wallet')); toggleWalletView('deposit');">
+                <div class="balance-pill btn-anim" onclick="switchTab('wallet', null); toggleWalletView('deposit');">
                     <i class="fas fa-wallet"></i> <span id="ui-balance">৳ 0</span>
                 </div>
             </div>
@@ -664,7 +685,7 @@
             
             <!-- HOME -->
             <div id="tab-home" class="fade-in">
-                <!-- SLIDER (Now with clickable links support) -->
+                <!-- SLIDER -->
                 <div class="slider-container">
                     <div class="slides" id="slider-track">
                         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
@@ -673,7 +694,6 @@
 
                 <!-- DYNAMIC CATEGORY CONTAINER -->
                 <div id="dynamic-home-container">
-                    <!-- Default Hardcoded Categories -->
                     <div class="cat-group-title"><i class="fas fa-map-marked-alt"></i> Battle Royale (BR)</div>
                     <div class="cat-grid" id="dynamic-cat-grid">
                         <div class="cat-card btn-anim" onclick="openCategory('BR SOLO')">
@@ -696,7 +716,7 @@
                 </div>
             </div>
 
-            <!-- LEADERBOARD TAB (NEW) -->
+            <!-- LEADERBOARD TAB (RESTORED) -->
             <div id="tab-leaderboard" class="hidden fade-in">
                 <div class="section-header">
                     <i class="fas fa-arrow-left btn-anim" onclick="switchTab('home', document.getElementById('nav-home'))"></i>
@@ -710,6 +730,17 @@
                 
                 <div id="leaderboard-container">
                     <div style="text-align:center; color:var(--text-muted);">Loading Top Players...</div>
+                </div>
+            </div>
+
+            <!-- RESULTS TAB -->
+            <div id="tab-results" class="hidden fade-in">
+                <div class="section-header">
+                    <i class="fas fa-arrow-left btn-anim" onclick="switchTab('home', document.getElementById('nav-home'))"></i>
+                    <h2>Match Results</h2>
+                </div>
+                <div id="results-list-container" style="padding: 15px 0;">
+                    <div style="text-align:center; color:var(--text-muted);">Loading Results...</div>
                 </div>
             </div>
 
@@ -995,12 +1026,17 @@
 
         </main>
 
+        <!-- FLOATING SUPPORT BUTTON (NEW) -->
+        <div class="floating-support-btn btn-anim" onclick="openTelegram()" title="Support">
+            <i class="fas fa-headset"></i>
+        </div>
+
         <!-- REFERRAL MODAL -->
         <div class="modal-overlay" id="referralModal">
             <div class="modal-box">
                 <i class="fas fa-times close-btn btn-anim" onclick="closeReferralModal()"></i>
                 <div class="fund-title" style="margin-bottom: 10px; justify-content: center;"><i class="fas fa-users" style="color:var(--warning);"></i> Referral Dashboard</div>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px; text-align:center;">আপনার রেফার কোডটি কপি করতে নিচের কোডের উপর ক্লিক করুন。</p>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px; text-align:center;">আপনার রেফার কোডটি কপি করতে নিচের কোডের উপর ক্লিক করুন।</p>
                 
                 <div class="admin-number btn-anim" id="modal-ref-code" onclick="copyText(this.innerText.trim())" title="Click to copy">
                     LOAD <i class="fas fa-copy" style="font-size:1rem; margin-left:8px;"></i>
@@ -1019,28 +1055,27 @@
             </div>
         </div>
 
-        <!-- BOTTOM NAV (UPDATED: 5 ITEMS INCLUDED LEADERBOARD) -->
+        <!-- BOTTOM NAV (RESTORED LEADERBOARD, REMOVED WALLET) -->
         <nav class="bottom-nav">
             <div class="nav-item active btn-anim" id="nav-home" onclick="switchTab('home', this)">
                 <i class="fas fa-home"></i>
-                <span class="bangla-text">হোম</span>
+                <span style="font-family: 'Poppins', sans-serif;">Home</span>
             </div>
             <div class="nav-item btn-anim" id="nav-matches" onclick="openCategory('ALL'); this.classList.add('active');">
                 <i class="fas fa-gamepad"></i>
-                <span class="bangla-text">ম্যাচ</span>
+                <span style="font-family: 'Poppins', sans-serif;">Matches</span>
             </div>
-            <!-- LEADERBOARD ADDED HERE -->
             <div class="nav-item btn-anim" id="nav-leaderboard" onclick="viewLeaderboard(); this.classList.add('active');">
                 <i class="fas fa-trophy"></i>
-                <span class="bangla-text">টপ ১০০</span>
+                <span style="font-family: 'Poppins', sans-serif;">Leaderboard</span>
             </div>
-            <div class="nav-item btn-anim" id="nav-wallet" onclick="switchTab('wallet', this); toggleWalletView('deposit');">
-                <i class="fas fa-wallet"></i>
-                <span class="bangla-text">উইথড্র</span>
+            <div class="nav-item btn-anim" id="nav-results" onclick="loadResults(); this.classList.add('active');">
+                <i class="fas fa-poll-h"></i>
+                <span style="font-family: 'Poppins', sans-serif;">Results</span>
             </div>
             <div class="nav-item btn-anim" id="nav-profile" onclick="switchTab('profile', this)">
                 <i class="fas fa-user"></i>
-                <span class="bangla-text">প্রোফাইল</span>
+                <span style="font-family: 'Poppins', sans-serif;">Profile</span>
             </div>
         </nav>
     </div>
@@ -1165,28 +1200,34 @@
         }
     }, 30); // smooth, fast load ~1.5 - 2s total
 
-    // ================= GLOBAL COUNTDOWN UPDATER =================
+    // ================= GLOBAL COUNTDOWN UPDATER (REAL-TIME SECONDS) =================
     window.updateCountdowns = () => {
         const now = new Date().getTime();
         document.querySelectorAll('.match-countdown').forEach(el => {
             const matchTime = new Date(el.getAttribute('data-time')).getTime();
             const diff = matchTime - now;
+            
             if (diff > 0) {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                let timeText = "(In ";
-                if(days > 0) timeText += `${days}d `;
-                if(hours > 0) timeText += `${hours}h `;
-                timeText += `${mins}m)`;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+                let timeText = "Starts In: ";
+                if(d > 0) timeText += `${d} Day `;
+                if(h > 0) timeText += `${h} Hour `;
+                if(m > 0) timeText += `${m} Minute `;
+                timeText += `${s} Second`;
+
                 el.innerText = timeText;
+                el.classList.remove('started');
             } else {
-                el.innerText = "(Started)";
-                el.style.color = "var(--text-muted)";
+                el.innerText = "Match Started";
+                el.classList.add('started');
             }
         });
     };
-    setInterval(window.updateCountdowns, 60000); // Update every 1 minute
+    setInterval(window.updateCountdowns, 1000); // Updates every 1 second perfectly
 
     // ================= GENERAL FUNCTIONS =================
     
@@ -1209,7 +1250,7 @@
         renderMatches();
     };
 
-    // ================= NEW: LEADERBOARD LOGIC =================
+    // ================= RESTORED: LEADERBOARD LOGIC =================
     window.viewLeaderboard = async () => {
         switchTab('leaderboard', document.getElementById('nav-leaderboard'));
         const container = document.getElementById('leaderboard-container');
@@ -1253,6 +1294,70 @@
         } catch(e) {
             container.innerHTML = '<div style="text-align:center; color:var(--primary); padding:20px;">Error loading leaderboard.</div>';
         }
+    };
+
+    // ================= NEW: RESULTS LOGIC =================
+    window.loadResults = () => {
+        switchTab('results', document.getElementById('nav-results'));
+        const container = document.getElementById('results-list-container');
+        
+        if(!currentUserData) {
+            container.innerHTML = '<div style="text-align:center; color:var(--primary); padding:20px;">Please login to view results.</div>';
+            return;
+        }
+
+        // Get matches that the user joined AND are in the past
+        const playedMatches = allMatches.filter(m => {
+            let isPast = new Date(m.matchTime).getTime() <= new Date().getTime();
+            return isPast && m.players && m.players.includes(currentUserData.uid);
+        });
+
+        // Sort by most recent first
+        playedMatches.sort((a, b) => new Date(b.matchTime).getTime() - new Date(a.matchTime).getTime());
+
+        if(playedMatches.length === 0) {
+            container.innerHTML = `<div style="text-align:center; padding: 60px 20px; color:var(--text-muted);"><i class="fas fa-box-open" style="font-size:3rem; margin-bottom:15px; opacity:0.5;"></i><h3 style="font-weight:700; font-size:1.3rem;">No Results Found</h3><p style="font-size:0.85rem; margin-top:5px;">You haven't played any matches or results are pending.</p></div>`;
+            return;
+        }
+
+        let html = "";
+        playedMatches.forEach(m => {
+            let dateStr = new Date(m.matchTime).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+            
+            html += `
+            <div class="res-match-card fade-in">
+                <div class="res-header">
+                    <div class="res-title">${m.title}</div>
+                    <div class="res-date">${dateStr}</div>
+                </div>`;
+
+            if(m.results && Array.isArray(m.results) && m.results.length > 0) {
+                html += `<table class="res-table">
+                            <thead><tr><th>#</th><th>Name</th><th>Kills</th><th>Prize</th></tr></thead>
+                            <tbody>`;
+                
+                m.results.forEach((res, index) => {
+                    let rank = index + 1;
+                    let rankClass = rank === 1 ? 'res-rank-1' : (rank === 2 ? 'res-rank-2' : (rank === 3 ? 'res-rank-3' : ''));
+                    // Highlight the current user's row
+                    let rowBg = (res.uid === currentUserData.uid || res.name === m.joinedPlayersInfo?.[currentUserData.uid]) ? 'background: rgba(255,0,60,0.1);' : '';
+
+                    html += `<tr style="${rowBg}">
+                                <td class="${rankClass}">${rank}</td>
+                                <td>${res.name}</td>
+                                <td>${res.kills || 0}</td>
+                                <td class="res-prize">৳${res.prize || 0}</td>
+                            </tr>`;
+                });
+                html += `</tbody></table>`;
+            } else {
+                html += `<div style="padding: 20px; text-align: center; color: var(--warning); font-size: 0.85rem; font-weight: 600;"><i class="fas fa-hourglass-half"></i> Results Pending... Admin will update soon.</div>`;
+            }
+            
+            html += `</div>`;
+        });
+
+        container.innerHTML = html;
     };
 
     window.loadWalletHistory = async () => {
@@ -1348,7 +1453,7 @@
     };
     
     window.switchTab = (tab, el = null) => {
-        const tabs = ['home', 'matches', 'profile', 'wallet', 'rules', 'developer', 'history', 'notifications', 'leaderboard'];
+        const tabs = ['home', 'matches', 'profile', 'wallet', 'rules', 'developer', 'history', 'notifications', 'results', 'leaderboard'];
         tabs.forEach(t => { 
             let ele = document.getElementById('tab-'+t); 
             if(ele) ele.classList.add('hidden'); 
@@ -1633,6 +1738,7 @@
 
         if(!document.getElementById('tab-matches').classList.contains('hidden')) renderMatches(); 
         if(!document.getElementById('tab-history').classList.contains('hidden')) viewHistory();
+        if(!document.getElementById('tab-results').classList.contains('hidden')) loadResults();
     });
 
     // PWA MANIFEST DYNAMIC UPDATER 
@@ -1864,11 +1970,11 @@
             let matchIdShort = m.id.substring(0,5).toUpperCase(); let dateStr = new Date(m.matchTime).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
             let typeLabel = "SOLO"; if(m.category && m.category.includes('DUO')) typeLabel = "DUO"; if(m.category && m.category.includes('SQUAD')) typeLabel = "SQUAD";
 
-            // NEW COUNTDOWN SPAN ADDED NEXT TO DATE
+            // UPDATED: MOVED COUNTDOWN BANNER TO BOTTOM OF CARD
             html += `
             <div class="match-card fade-in">
                 <div class="mc-id">#${matchIdShort}</div>
-                <div class="mc-header"><div style="padding-right: 40px;"><div class="mc-title">${m.title}</div><div class="mc-time"><i class="fas fa-calendar-alt"></i> ${dateStr} <span class="match-countdown" data-time="${m.matchTime}" style="color: var(--primary); margin-left: 8px; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.5px;"></span></div></div></div>
+                <div class="mc-header"><div style="padding-right: 40px;"><div class="mc-title">${m.title}</div><div class="mc-time"><i class="fas fa-calendar-alt"></i> ${dateStr}</div></div></div>
                 <div class="mc-stats-grid">
                     <div class="mc-stat"><i class="fas fa-coins text-primary"></i> <span class="prog-text">Fee</span> <strong>৳${m.entryFee}</strong></div>
                     <div class="mc-stat"><i class="fas fa-trophy text-success"></i> <span class="prog-text">Prize</span> <strong>৳${m.totalPrize}</strong></div>
@@ -1881,13 +1987,17 @@
                     <div class="mc-prog-text"><span class="prog-text"><i class="fas fa-users" style="color:var(--text-muted);"></i> Registration</span> <span class="prog-text">${jCount}/${total}</span></div>
                     <div class="prog-bar"><div class="prog-fill" style="width:${prog}%;"></div></div>
                 </div>
-                <div class="mc-actions-wrap">
+                <div class="mc-actions-wrap" style="padding-bottom: 15px;">
                     ${alreadyJoined ? `<button class="btn-join btn-joined btn-anim"><i class="fas fa-check-circle"></i> Already Joined</button>` : `<button class="btn-join btn-anim" onclick="joinMatch('${m.id}', ${m.entryFee}, ${jCount}, ${total})"><i class="fas fa-gamepad"></i> Join Match</button>`}
                     <div class="mc-3-btns">
                         <button class="btn-anim" onclick="showSlots('${m.id}')"><i class="fas fa-users"></i> Slots</button>
                         ${alreadyJoined ? `<button class="btn-anim" style="border-color:var(--warning);" onclick="showRoom('${m.matchTime}', '${m.roomId}', '${m.roomPass}')"><i class="fas fa-key" style="color:var(--warning);"></i> Room</button>` : `<button class="btn-anim" onclick="Swal.fire({title:'Oops', text:'You must join to see Room Details', icon:'warning', background:'#12121a', color:'#fff'})"><i class="fas fa-lock"></i> Room</button>`}
                         <button class="btn-anim" onclick="showPrize('${m.id}')"><i class="fas fa-gift"></i> Prizes</button>
                     </div>
+                </div>
+                <!-- NEW COUNTDOWN BANNER -->
+                <div class="mc-countdown-banner match-countdown" data-time="${m.matchTime}">
+                    Loading Timer...
                 </div>
             </div>`;
         });
