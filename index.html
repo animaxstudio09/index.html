@@ -18,15 +18,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- ================= ONESIGNAL PUSH NOTIFICATION (FIXED) ================= -->
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
- <script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "603fb5e0-9640-4866-a405-ef94dd16c75a",
-    });
-  });
- </script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "603fb5e0-9640-4866-a405-ef94dd16c75a",
+          notifyButton: {
+            enable: true, /* ইউজারের জন্য নোটিফিকেশন অন/অফ করার বাটন */
+          },
+        });
+        /* ইউজার অ্যাপে ঢুকলেই Allow/Block পারমিশন চাইবে */
+        OneSignal.Slidedown.promptPush();
+      });
+    </script>
+
     <style>
         /* ================= 1. PREMIUM ESPORTS THEME (DEFAULT ORIGINAL) ================= */
         :root { 
@@ -1036,7 +1044,7 @@
             <div class="modal-box">
                 <i class="fas fa-times close-btn btn-anim" onclick="closeReferralModal()"></i>
                 <div class="fund-title" style="margin-bottom: 10px; justify-content: center;"><i class="fas fa-users" style="color:var(--warning);"></i> Referral Dashboard</div>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px; text-align:center;">আপনার রেফার কোডটি কপি করতে নিচের কোডের উপর ক্লিক করুন।</p>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px; text-align:center;">আপনার রেফার কোডটি কপি করতে নিচের কোডের উপর ক্লিক করুন。</p>
                 
                 <div class="admin-number btn-anim" id="modal-ref-code" onclick="copyText(this.innerText.trim())" title="Click to copy">
                     LOAD <i class="fas fa-copy" style="font-size:1rem; margin-left:8px;"></i>
