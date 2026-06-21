@@ -18,22 +18,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <!-- ================= ONESIGNAL PUSH NOTIFICATION (FIXED) ================= -->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      OneSignalDeferred.push(async function(OneSignal) {
-        await OneSignal.init({
-          appId: "603fb5e0-9640-4866-a405-ef94dd16c75a",
-          notifyButton: {
-            enable: true, /* ইউজারের জন্য নোটিফিকেশন অন/অফ করার বাটন */
-          },
-        });
-        /* ইউজার অ্যাপে ঢুকলেই Allow/Block পারমিশন চাইবে */
-        OneSignal.Slidedown.promptPush();
-      });
-    </script>
 
     <style>
         /* ================= 1. PREMIUM ESPORTS THEME (DEFAULT ORIGINAL) ================= */
@@ -928,7 +912,7 @@
                         
                         <!-- DYNAMIC WITHDRAW RULES -->
                         <div id="dynamic-withdraw-rules" class="bangla-text" style="font-size: 0.8rem; color: #ccc; margin-bottom: 20px; background: rgba(255,0,60,0.1); padding: 15px; border-radius: 10px; border: 1px dashed rgba(255,0,60,0.3); line-height: 1.6;">
-                            ⚠️ <b>উইথড্র নিয়ম:</b> সর্বনিম্ন উইথড্র ৮০ টাকা। চার্জ: ৮০-৪৯৯ টাকায় ৫৳, ৫০০+ টাকায় ১০৳, ১০০০+ টাকায় ২০৳। রিকোয়েস্ট দেওয়ার ২৪ ঘন্টার মধ্যে পেমেন্ট ক্লিয়ার করা হবে।
+                            ⚠️ <b>উইথড্র নিয়ম:</b> সর্বনিম্ন উইথড্র ৮০ টাকা। চার্জ: ৮০-৪৯৯ টাকায় ৫৳, ৫০০+ টাকায় ১০৳, ১০০০+ টাকায় ২০৳। রিকোয়েস্ট দেওয়ার ২৪ ঘন্টার মধ্যে පেমেন্ট ক্লিয়ার করা হবে।
                         </div>
 
                         <label style="font-size:0.8rem; font-weight:600; color:var(--text-muted); display:block; margin-bottom:6px;">Amount</label>
@@ -1044,7 +1028,7 @@
             <div class="modal-box">
                 <i class="fas fa-times close-btn btn-anim" onclick="closeReferralModal()"></i>
                 <div class="fund-title" style="margin-bottom: 10px; justify-content: center;"><i class="fas fa-users" style="color:var(--warning);"></i> Referral Dashboard</div>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px; text-align:center;">আপনার রেফার কোডটি কপি করতে নিচের কোডের উপর ক্লিক করুন。</p>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px; text-align:center;">আপনার রেফার কোডটি কপি করতে নিচের কোডের উপর ক্লিক করুন।</p>
                 
                 <div class="admin-number btn-anim" id="modal-ref-code" onclick="copyText(this.innerText.trim())" title="Click to copy">
                     LOAD <i class="fas fa-copy" style="font-size:1rem; margin-left:8px;"></i>
@@ -1978,7 +1962,7 @@
             let matchIdShort = m.id.substring(0,5).toUpperCase(); let dateStr = new Date(m.matchTime).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
             let typeLabel = "SOLO"; if(m.category && m.category.includes('DUO')) typeLabel = "DUO"; if(m.category && m.category.includes('SQUAD')) typeLabel = "SQUAD";
 
-            // UPDATED: MOVED COUNTDOWN BANNER TO BOTTOM OF CARD
+            // UPDATED: PER KILL FIX AND COUNTDOWN BANNER TO BOTTOM
             html += `
             <div class="match-card fade-in">
                 <div class="mc-id">#${matchIdShort}</div>
@@ -1986,7 +1970,7 @@
                 <div class="mc-stats-grid">
                     <div class="mc-stat"><i class="fas fa-coins text-primary"></i> <span class="prog-text">Fee</span> <strong>৳${m.entryFee}</strong></div>
                     <div class="mc-stat"><i class="fas fa-trophy text-success"></i> <span class="prog-text">Prize</span> <strong>৳${m.totalPrize}</strong></div>
-                    <div class="mc-stat"><i class="fas fa-skull text-danger" style="color:red;"></i> <span class="prog-text">Per Kill</span> <strong>৳${m.perKill || 0}</strong></div>
+                    <div class="mc-stat"><i class="fas fa-skull text-danger" style="color:red;"></i> <span class="prog-text">Per Kill</span> <strong>৳${m.perKill || m.per_kill || 0}</strong></div>
                     <div class="mc-stat"><i class="fas fa-user-friends text-warning"></i> <span class="prog-text">Type</span> <strong>${typeLabel}</strong></div>
                     <div class="mc-stat"><i class="fas fa-map-marked-alt text-primary"></i> <span class="prog-text">Map</span> <strong>Bermuda</strong></div>
                     <div class="mc-stat"><i class="fas fa-crosshairs text-success"></i> <span class="prog-text">Ver</span> <strong>TPP</strong></div>
@@ -2062,7 +2046,7 @@
                 <div class="mc-stats-grid" style="border-bottom:none;">
                     <div class="mc-stat"><i class="fas fa-coins text-primary"></i> <span>Fee</span> <strong>৳${m.entryFee}</strong></div>
                     <div class="mc-stat"><i class="fas fa-trophy text-success"></i> <span>Prize</span> <strong>৳${m.totalPrize}</strong></div>
-                    <div class="mc-stat"><i class="fas fa-skull text-danger"></i> <span>Per Kill</span> <strong>৳${m.perKill || 0}</strong></div>
+                    <div class="mc-stat"><i class="fas fa-skull text-danger"></i> <span>Per Kill</span> <strong>৳${m.perKill || m.per_kill || 0}</strong></div>
                 </div>
             </div>`; 
         }); 
@@ -2222,7 +2206,7 @@
             let p1 = Math.round(match.totalPrize * 0.5); 
             let p2 = Math.round(match.totalPrize * 0.3); 
             let p3 = Math.round(match.totalPrize * 0.2); 
-            htmlContent = `<div style="text-align:left; font-size:1.1rem; line-height:2;">🥇 1st: <b style="color:#00e676">৳ ${p1}</b><br>🥈 2nd: <b>৳ ${p2}</b><br>🥉 3rd: <b>৳ ${p3}</b><br>💀 Per Kill: <b style="color:var(--primary)">৳ ${match.perKill || 0}</b></div>`; 
+            htmlContent = `<div style="text-align:left; font-size:1.1rem; line-height:2;">🥇 1st: <b style="color:#00e676">৳ ${p1}</b><br>🥈 2nd: <b>৳ ${p2}</b><br>🥉 3rd: <b>৳ ${p3}</b><br>💀 Per Kill: <b style="color:var(--primary)">৳ ${match.perKill || match.per_kill || 0}</b></div>`; 
         }
         Swal.fire({ title: 'Prize Breakdown', html: htmlContent, confirmButtonColor: '#ff003c', background: '#12121a', color: '#fff' });
     };
@@ -2306,5 +2290,51 @@
         }
     };
 </script>
+
+<!-- ================= ONESIGNAL PUSH SECURITY VAULT ================= -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "603fb5e0-9640-4866-a405-ef94dd16c75a",
+    });
+
+    evaluatePushSecurity();
+    OneSignal.User.PushSubscription.addEventListener("change", evaluatePushSecurity);
+  });
+
+  function evaluatePushSecurity() {
+    const isOptedIn = OneSignal.User.PushSubscription.optedIn;
+    if (!isOptedIn) {
+      renderForceModal();
+    } else {
+      dismissForceModal();
+    }
+  }
+
+  function renderForceModal() {
+    if(document.getElementById('os-security-vault')) return;
+    const overlay = document.createElement('div');
+    overlay.id = 'os-security-vault';
+    overlay.style = "position:fixed;top:0;left:0;width:100%;height:100vh;background:radial-gradient(circle,#0a0f19 0%,#000 100%);z-index:99999999;display:flex;justify-content:center;align-items:center;backdrop-filter:blur(15px);font-family:'Poppins',sans-serif;";
+    overlay.innerHTML = `
+      <div style="background:#0d1117;border:2px solid #ff003c;box-shadow:0 0 35px rgba(255,0,60,0.3);padding:40px 30px;border-radius:24px;text-align:center;max-width:380px;width:90%;">
+        <i class="fas fa-bell" style="font-size:3.8rem;color:#ff003c;margin-bottom:20px;animation:pulse 1.5s infinite;"></i>
+        <h2 style="color:#fff;font-weight:800;margin-bottom:12px;font-size:1.4rem;">SECURITY CHECK</h2>
+        <p style="color:#8b92a5;font-size:0.9rem;line-height:1.6;margin-bottom:28px;">টুর্নামেন্টের রুম আইডি, পাসওয়ার্ড এবং লাইভ প্রাইজমানির আপডেট পেতে নোটিফিকেশন <b>Allow</b> করা বাধ্যতামূলক।</p>
+        <button onclick="OneSignal.User.PushSubscription.optIn()" style="background:linear-gradient(135deg,#ff003c,#b3002a);color:#fff;border:none;padding:16px;width:100%;border-radius:14px;font-weight:bold;font-size:1rem;cursor:pointer;box-shadow:0 8px 20px rgba(255,0,60,0.4);text-transform:uppercase;letter-spacing:1px;">ALLOW NOTIFICATIONS</button>
+      </div>
+      <style>@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.13);opacity:.7}}</style>
+    `;
+    document.body.appendChild(overlay);
+  }
+
+  function dismissForceModal() {
+    const box = document.getElementById('os-security-vault');
+    if(box) box.remove();
+  }
+</script>
+
 </body>
 </html>
